@@ -1,8 +1,22 @@
 import '../styles/globals.css'
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
+import React, { useState, useEffect } from 'react';
+import Loading from './loading';
+import Router from 'next/router'
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() =>{
+    if(!localStorage.getItem('user')){
+      Router.push('/login')
+    }
+    setTimeout(() => {
+      setLoading(true)
+    }, 3500);
+  })
+
   return <>
     <Head>
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -13,7 +27,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
     </Head>
-    <Component {...pageProps} />
+    {loading ? (
+    <Component {...pageProps} />):(
+      <Loading />
+    )}
   </>
 }
 
