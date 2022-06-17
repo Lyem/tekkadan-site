@@ -74,7 +74,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="theme-color" content="#ffffff" />
       </Head>
       <GlobalStyles />
-      {loading ? <Component {...pageProps} /> : <Loading />}
+      <Component {...pageProps} />
     </ThemeProvider>
   )
 }
