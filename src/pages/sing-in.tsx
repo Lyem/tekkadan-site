@@ -35,7 +35,7 @@ const SingIn = () => {
           }
         }
       )
-      localStorage.setItem('user', JSON.stringify(response.data))
+      //localStorage.setItem('user', JSON.stringify(response.data))
       Router.push('/')
     } catch (err) {
       console.log(err)
