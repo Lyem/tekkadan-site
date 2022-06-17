@@ -1,53 +1,10 @@
 import Head from 'next/head'
 import type { AppProps } from 'next/app'
-import React, { useState, useEffect } from 'react'
-import Loading from '../components/loading'
 import GlobalStyles from '../styles/global'
 import { ThemeProvider } from 'styled-components'
 import theme from '../styles/theme'
-import axios from 'axios'
-import * as r from '../utils/api.routes'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [loading, setLoading] = useState(false)
-  const [update, setUpdate] = useState(false)
-  const [values, setValues] = useState({
-    token: ''
-  })
-
-  const updateUser = async () => {
-    if (update) {
-      try {
-        setUpdate(false)
-        const response = await axios.get(r.default.routes.getUserByToken, {
-          headers: {
-            Authorization: 'Bearer ' + values.token
-          }
-        })
-        const a = response.data
-        a.token = values.token
-        localStorage.setItem('user', JSON.stringify(a))
-      } catch (err) {
-        console.log(err)
-      }
-    }
-  }
-
-  useEffect(() => {
-    if (!loading) {
-      if (localStorage.getItem('user')) {
-        const user = JSON.parse(localStorage.getItem('user')!)
-        setValues({ token: user.token })
-        setUpdate(true)
-      }
-    }
-    setTimeout(() => {
-      setLoading(true)
-    }, 3500)
-  }, [loading])
-
-  updateUser()
-
   return (
     <ThemeProvider theme={theme}>
       <Head>
