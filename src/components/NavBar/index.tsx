@@ -29,7 +29,7 @@ const NavBar = () => {
         }
       })
       console.log(response.data)
-      localStorage.removeItem('user')
+      //localStorage.removeItem('user')
       setValues({
         user: {
           owner: false,
