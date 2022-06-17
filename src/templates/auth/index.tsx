@@ -10,12 +10,6 @@ type AuthProps = {
 }
 
 const Auth = ({ children, title }: AuthProps) => {
-  useEffect(() => {
-    if (localStorage.getItem('user')) {
-      Router.push('/')
-    }
-  })
-
   return (
     <S.Wrapper>
       <S.BannerBlock />

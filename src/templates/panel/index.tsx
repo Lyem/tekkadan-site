@@ -6,11 +6,6 @@ type PanelProps = {
 }
 
 const Panel = ({ children }: PanelProps) => {
-  if (!localStorage.getItem('user')) {
-    return <Custom404 />
-  }
-  const user = JSON.parse(localStorage.getItem('user')!)
-  console.log(user.token)
   return (
     <>
       <div>{children}</div>
