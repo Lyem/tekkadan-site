@@ -19,19 +19,6 @@ const NavBar = () => {
     user: { owner: false, profile_photo: '', token: '' },
     logged: false
   })
-  useEffect(() => {
-    if (localStorage.getItem('user')) {
-      const user = JSON.parse(localStorage.getItem('user')!)
-      setValues({
-        user: {
-          owner: user.owner,
-          profile_photo: user.profile_photo,
-          token: user.token
-        },
-        logged: true
-      })
-    }
-  }, [])
 
   const handleClick = async () => {
     try {
