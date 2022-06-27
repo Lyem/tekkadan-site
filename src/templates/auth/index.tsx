@@ -1,5 +1,3 @@
-import React, { useEffect } from 'react'
-import Router from 'next/router'
 import Logo from '../../components/Logo'
 import TitleTag from '../../components/TitleTag'
 import * as S from './style'
