@@ -12,6 +12,7 @@ export type IconProps = {
     | 'icon-logout'
     | 'icon-message'
     | 'icon-account'
+    | 'icon-bars'
   size?: number
   center?: boolean
 }

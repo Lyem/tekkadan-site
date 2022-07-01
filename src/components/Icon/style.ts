@@ -40,30 +40,33 @@ export const WrapperIcon = styled.span<IconProps>`
   }
 
   .icon-bell:before {
-    content: '';
-  }
-  .icon-lock:before {
     content: '';
   }
-  .icon-save:before {
+  .icon-lock:before {
     content: '';
   }
-  .icon-setting:before {
+  .icon-save:before {
     content: '';
   }
-  .icon-magnifier:before {
+  .icon-setting:before {
     content: '';
   }
-  .icon-login:before {
+  .icon-magnifier:before {
     content: '';
   }
-  .icon-logout:before {
+  .icon-login:before {
     content: '';
   }
-  .icon-message:before {
+  .icon-logout:before {
     content: '';
   }
-  .icon-account:before {
+  .icon-message:before {
     content: '';
+  }
+  .icon-account:before {
+    content: '';
+  }
+  .icon-bars:before {
+    content: '';
   }
 `
