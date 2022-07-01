@@ -1,18 +1,42 @@
 import styled, { css } from 'styled-components'
+import media from 'styled-media-query'
 import * as LogoStyles from '../Logo/style'
 import * as DropdownItemStyles from '../DropdownItem/style'
 
 export type NavBarProps = {
   logged?: boolean
+  transparency?: boolean
+  fixed?: boolean
 }
 
-export const Wrapper = styled.header`
-  ${({ theme }) => css`
-    background-color: ${theme.colors.contrast};
+export const WrapperClass = styled.header<NavBarProps>`
+  .noScroll {
+    ${({ theme, transparency }) => css`
+      ${transparency
+        ? `background-color: transparent;`
+        : `background-color: ${theme.colors.contrast};`}
+    `}
+  }
+
+  .scrolled {
+    ${({ theme }) => css`
+      background-color: ${theme.colors.contrast};
+    `}
+  }
+`
+
+export const Wrapper = styled.div<NavBarProps>`
+  ${({ theme, fixed }) => css`
+    ${fixed ? `position: fixed;` : ``}
     padding: ${theme.spacings.xxsmall} ${theme.spacings.xxxlarge};
+    ${media.lessThan('large')`
+      padding: ${theme.spacings.xxsmall} ${theme.spacings.small};
+    `}
+    width: 100%;
     align-items: center;
     display: flex;
     justify-content: space-between;
+    transition: all 150ms 150ms ease-in;
   `}
 `
 
@@ -34,6 +58,55 @@ export const Links = styled.a`
   &:hover {
     cursor: pointer;
   }
+  ${media.lessThan('medium')`
+    display: none;
+  `}
+`
+
+export const LinksMobile2 = styled.div`
+  position: relative;
+  text-align: center;
+`
+
+export const LinksMobile = styled.a`
+  display: block;
+  ${({ theme }) => css`
+    color: ${theme.colors.white};
+    margin-top: ${theme.spacings.medium};
+    font-size: ${theme.font.sizes.large};
+  `}
+`
+
+export const WrapperLinksMobile = styled.div`
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  z-index: 1;
+  width: 70%;
+  transform: translateX(-100%);
+  transform-origin: left center;
+  transition: all 150ms 150ms ease-in;
+  ${({ theme }) => css`
+    background-color: ${theme.colors.contrast2};
+    margin-left: -${theme.spacings.small};
+  `}
+`
+
+export const HamburgerMenu = styled.button`
+  background-color: transparent;
+  border: 0;
+  ${({ theme }) => css`
+    margin-right: ${theme.spacings.small};
+  `}
+  &:hover {
+    ${WrapperLinksMobile} {
+      transform: translateX(0%);
+      transition-timing-function: ease-out;
+    }
+  }
+  ${media.greaterThan('medium')`
+    display: none;
+  `}
 `
 
 export const WrapperUser = styled.ul`
@@ -90,6 +163,46 @@ export const WrapperUserSubMenu = styled.ul`
     ${({ theme }) => css`
       padding-top: ${theme.spacings.xxsmall};
     `}
+  }
+`
+
+export const WrapperSearch = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  height: 100vh;
+  width: 100%;
+  transform: scale(0, 0);
+  transform-origin: center;
+  transition: all 150ms 150ms ease-in;
+  ${({ theme }) => css`
+    background-color: ${theme.colors.contrast2};
+  `}
+`
+
+export const WrapperSearchNav = styled.div``
+
+export const ExitSearchButton = styled.div``
+
+export const SearchTextFild = styled.div`
+  ${media.lessThan('large')`
+    display: none;
+  `}
+`
+
+export const SearchButton = styled.button`
+  background-color: transparent;
+  border: 0;
+  ${media.greaterThan('large')`
+    display: none;
+  `}
+  &:hover {
+    ${WrapperSearch} {
+      transform: scale(1, 1);
+      transition-timing-function: ease-out;
+    }
   }
 `
 
