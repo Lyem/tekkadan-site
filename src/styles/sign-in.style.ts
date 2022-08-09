@@ -27,6 +27,8 @@ export const ForgotPassword = styled.a`
 
     &:hover {
       cursor: pointer;
+      color: ${theme.colors.white2};
+      text-decoration: none;
     }
   `}
 `
