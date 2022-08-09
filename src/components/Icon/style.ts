@@ -16,6 +16,10 @@ const wrapperModifiers = {
 
   primary2: (theme: DefaultTheme) => css`
     color: ${theme.colors.primary2};
+  `,
+
+  yellow: (theme: DefaultTheme) => css`
+    color: ${theme.colors.yellow};
   `
 }
 
@@ -68,5 +72,26 @@ export const WrapperIcon = styled.span<IconProps>`
   }
   .icon-bars:before {
     content: '';
+  }
+  .icon-star:before {
+    content: '';
+  }
+  .icon-discord:before {
+    content: '';
+  }
+  .icon-twitter:before {
+    content: '';
+  }
+  .icon-forward:before {
+    content: '';
+  }
+  .icon-back-arrow:before {
+    content: '';
+  }
+  .icon-love:before {
+    content: '';
+  }
+  .icon-chat:before {
+    content: '';
   }
 `
