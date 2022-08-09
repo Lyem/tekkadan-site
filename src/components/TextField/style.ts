@@ -6,6 +6,14 @@ const wrapperModifiers = {
     background-color: ${theme.colors.contrast};
   `,
 
+  contrast2: (theme: DefaultTheme) => css`
+    background-color: ${theme.colors.contrast2};
+  `,
+
+  contrast3: (theme: DefaultTheme) => css`
+    background-color: ${theme.colors.contrast3};
+  `,
+
   black: (theme: DefaultTheme) => css`
     background-color: ${theme.colors.black};
   `,

@@ -3,17 +3,21 @@ import * as S from './style'
 
 export type TextFieldProps = {
   onInputChange?: (value: string) => void
+  onInputFocus?: () => void
+  onInputBlur?: () => void
   initialValue?: string
   icon?: React.ReactNode
   iconPosition?: 'left' | 'right'
-  backgroundColor?: 'contrast' | 'black'
+  backgroundColor?: 'contrast' | 'black' | 'contrast2' | 'contrast3'
   fontSize?: 'xxsmall' | 'medium'
-  type?: 'text' | 'password' | 'email'
+  type?: 'text' | 'password' | 'email' | 'number' | 'date'
 } & InputHTMLAttributes<HTMLInputElement>
 
 const TextField = ({
   initialValue = '',
   onInputChange,
+  onInputFocus,
+  onInputBlur,
   icon,
   iconPosition = 'left',
   fontSize = 'medium',
@@ -30,6 +34,18 @@ const TextField = ({
     !!onInputChange && onInputChange(newValue)
   }
 
+  const onFocus = () => {
+    if (onInputFocus) {
+      return onInputFocus()
+    }
+  }
+
+  const onBlur = () => {
+    if (onInputBlur) {
+      return onInputBlur()
+    }
+  }
+
   return (
     <S.Wrapper>
       <S.InputWrapper backgroundColor={backgroundColor}>
@@ -37,6 +53,8 @@ const TextField = ({
         <S.Input
           type={type}
           onChange={onChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
           value={value}
           iconPosition={iconPosition}
           fontSize={fontSize}
