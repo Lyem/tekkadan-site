@@ -2,12 +2,17 @@ import * as S from './style'
 
 export type LogoProps = {
   size?: 'xsmall' | 'small' | 'normal' | 'large'
+  animateType?: 'infinit' | 'default'
   animate?: boolean
 }
 
-const Logo = ({ size = 'normal', animate = false }: LogoProps) => {
+const Logo = ({
+  size = 'normal',
+  animate = false,
+  animateType = 'default'
+}: LogoProps) => {
   return (
-    <S.Wrapper size={size} animate={animate}>
+    <S.Wrapper size={size} animate={animate} animateType={animateType}>
       <svg
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

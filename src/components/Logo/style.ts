@@ -21,21 +21,23 @@ const wrapperModifiers = {
   large: () => css`
     width: 15rem;
     height: 16.1rem;
+  `,
+
+  infinit: () => css`
+    animation: logoInfinit 2s ease 0s infinite;
+  `,
+
+  default: () => css`
+    animation: logo 7s ease 0s forwards;
   `
 }
 
 export const Wrapper = styled.div<LogoProps>`
-  ${({ theme, size, animate }) => css`
+  ${({ theme, size, animate, animateType }) => css`
     color: ${theme.colors.primary};
 
     ${!!size && wrapperModifiers[size]}
-
-    fill-opacity: 1;
-    stroke-dasharray: 150 0;
-    stroke-dashoffset: 0;
-    stroke-width: 0;
-    opacity: 1;
-    ${!!animate && 'animation: logo 7s ease 0s forwards;'}
+    ${!!animate && !!animateType && wrapperModifiers[animateType]}
   `}
 
   @keyframes logo {
@@ -62,6 +64,23 @@ export const Wrapper = styled.div<LogoProps>`
       opacity: 1;
     }
     100% {
+    }
+  }
+
+  @keyframes logoInfinit {
+    0% {
+      fill-opacity: 0;
+      stroke-dasharray: 1 60;
+      stroke-dashoffset: 0;
+      stroke-width: 1;
+      opacity: 1;
+    }
+    100% {
+      fill-opacity: 0;
+      stroke-dasharray: 150 60;
+      stroke-dashoffset: 0;
+      stroke-width: 1;
+      opacity: 1;
     }
   }
 `
