@@ -2,6 +2,8 @@ import styled, { css } from 'styled-components'
 import media from 'styled-media-query'
 import * as LogoStyles from '../Logo/style'
 import * as DropdownItemStyles from '../DropdownItem/style'
+import * as TextFieldStyles from '../../components/TextField/style'
+import * as MangaList from '../MangaList/style'
 
 export type NavBarProps = {
   logged?: boolean
@@ -13,8 +15,11 @@ export const WrapperClass = styled.header<NavBarProps>`
   .noScroll {
     ${({ theme, transparency }) => css`
       ${transparency
-        ? `background-color: transparent;`
+        ? `background: linear-gradient(180deg, rgba(0, 0, 0, 0.76)  0%, rgba(39, 35, 35, 0) 100%);`
         : `background-color: ${theme.colors.contrast};`}
+      ${TextFieldStyles.InputWrapper} {
+        ${transparency ? `background-color: rgba(11, 1, 1, .4);` : ``}
+      }
     `}
   }
 
@@ -28,6 +33,8 @@ export const WrapperClass = styled.header<NavBarProps>`
 export const Wrapper = styled.div<NavBarProps>`
   ${({ theme, fixed }) => css`
     ${fixed ? `position: fixed;` : ``}
+    ${fixed ? `top: 0;` : ``}
+    ${fixed ? `z-index: 30;` : ``}
     padding: ${theme.spacings.xxsmall} ${theme.spacings.xxxlarge};
     ${media.lessThan('large')`
       padding: ${theme.spacings.xxsmall} ${theme.spacings.small};
@@ -36,7 +43,7 @@ export const Wrapper = styled.div<NavBarProps>`
     align-items: center;
     display: flex;
     justify-content: space-between;
-    transition: all 150ms 150ms ease-in;
+    transition: all 250ms 250ms ease-in;
   `}
 `
 
@@ -51,12 +58,18 @@ export const WrapperLinks = styled.div`
 `
 
 export const Links = styled.a`
+  text-decoration: none;
   ${({ theme }) => css`
     color: ${theme.colors.white};
     margin-left: ${theme.spacings.medium};
   `}
   &:hover {
     cursor: pointer;
+    text-decoration: none;
+    ${({ theme }) => css`
+      color: ${theme.colors.white};
+      margin-left: ${theme.spacings.medium};
+    `}
   }
   ${media.lessThan('medium')`
     display: none;
@@ -113,6 +126,8 @@ export const WrapperUser = styled.ul`
   align-items: center;
   display: flex;
   list-style: none;
+  margin-top: auto;
+  margin-bottom: auto;
 `
 
 export const User = styled.button<NavBarProps>`
@@ -154,6 +169,7 @@ export const WrapperUserSubMenu = styled.ul`
   right: 0;
   list-style: none;
   margin: 0;
+  z-index: 1000;
   opacity: 0.25;
   top: calc(100% + 0.8rem);
   transform: rotateX(-90deg);
@@ -186,10 +202,63 @@ export const WrapperSearchNav = styled.div``
 
 export const ExitSearchButton = styled.div``
 
+export const SearchResult = styled.div`
+  text-align: center;
+  position: absolute;
+  overflow: hidden;
+  overflow-y: scroll;
+  z-index: 1000;
+  right: 0;
+  height: 60vh;
+  opacity: 0.25;
+  top: calc(100% + 0.8rem);
+  transform: rotateX(-90deg);
+  transform-origin: top center;
+  transition: all 150ms 150ms ease-in;
+  width: calc(100% * 2);
+  ${({ theme }) => css`
+    background-color: ${theme.colors.contrast2};
+    border-radius: ${theme.border.radius};
+  `}
+  margin: 0;
+  top: calc(100% + 0.8rem);
+
+  ${MangaList.Title} {
+    margin-top: -5px;
+  }
+`
+
+export const TitleResult = styled.h1`
+  ${({ theme }) => css`
+    color: ${theme.colors.white2};
+    font-size: ${theme.font.sizes.large};
+  `}
+`
+
+export const ResultNotfound = styled.h2`
+  ${({ theme }) => css`
+    color: ${theme.colors.white3};
+    font-size: ${theme.font.sizes.medium};
+  `}
+`
+
+export const TitleSeparate = styled.hr`
+  ${({ theme }) => css`
+    color: ${theme.colors.contrast};
+  `}
+`
+
 export const SearchTextFild = styled.div`
   ${media.lessThan('large')`
     display: none;
   `}
+  ${TextFieldStyles.Input}:focus {
+    ${SearchResult} {
+      opacity: 1;
+      transform: rotateX(0deg);
+      transition-timing-function: ease-out;
+    }
+  }
 `
 
 export const SearchButton = styled.button`
@@ -198,12 +267,6 @@ export const SearchButton = styled.button`
   ${media.greaterThan('large')`
     display: none;
   `}
-  &:hover {
-    ${WrapperSearch} {
-      transform: scale(1, 1);
-      transition-timing-function: ease-out;
-    }
-  }
 `
 
 export const WrapperUserItem = styled.li`
