@@ -15,6 +15,7 @@ export const SubMenuLinks = styled.a<DropdownItemProps>`
   `}
   &:hover {
     cursor: pointer;
+    text-decoration: none;
     ${({ theme, log_out }) => css`
       background-color: ${theme.colors.contrast3};
       ${log_out
@@ -30,6 +31,7 @@ export const SubMenuLinks = styled.a<DropdownItemProps>`
     }
   }
   &:active {
+    text-decoration: none;
     ${({ theme, log_out }) => css`
       ${log_out
         ? `color: ${theme.colors.primary2};`
