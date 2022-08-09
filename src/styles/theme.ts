@@ -43,6 +43,7 @@ export default {
     black: '#0B0101',
     white: '#FAFAFA',
     white2: '#DADADA',
-    white3: '#969696'
+    white3: '#969696',
+    yellow: '#FDD308'
   }
 }
