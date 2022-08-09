@@ -1,0 +1,32 @@
+export interface UserInterface {
+  id: number
+  name: string
+  profile_photo: string
+  background_photo: string
+  about: string
+  banned: boolean
+  message: boolean
+  report_message: boolean
+  report_chapter: boolean
+  create_manga: boolean
+  update_manga: boolean
+  delete_manga: boolean
+  upload_manga_chapter: boolean
+  update_manga_chapter: boolean
+  delete_manga_chapter: boolean
+  create_novel: boolean
+  update_novel: boolean
+  delete_novel: boolean
+  upload_novel_chapter: boolean
+  update_novel_chapter: boolean
+  delete_novel_chapter: boolean
+  create_people: boolean
+  update_people: boolean
+  delete_people: boolean
+  ban_user: boolean
+  unban_user: boolean
+  manager_permisions: boolean
+  owner: boolean
+  created_at: Date
+  updated_at: Date
+}
