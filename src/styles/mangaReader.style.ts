@@ -19,9 +19,16 @@ type Url = {
   url: string
 }
 
-export const Wrapper = styled.main`
+export const WrapperRoot = styled.main`
   height: 100vh;
-  max-height: 100vh;
+  width: 100vw;
+  overflow-y: hidden;
+  overflow: hidden;
+`
+
+export const Wrapper = styled.div`
+  height: calc(100% - 62px);
+  overflow: hidden;
 `
 
 export const infosTitle = styled.h2`
@@ -59,7 +66,7 @@ export const Reader = styled.div<OpenProps>`
   text-align: left;
   display: block;
   align-items: center;
-  max-height: 93.4vh;
+  height: 100%;
   overflow: hidden;
   overflow-y: scroll;
   ${({ open }) => css`
@@ -85,7 +92,7 @@ export const WrapperMenuButtons = styled.div<OpenProps>`
 `
 
 export const SideMenu = styled.div<OpenProps>`
-  height: 93.4vh;
+  height: calc(100% - 62px);
   z-index: -1;
   width: 320px;
   right: 0;

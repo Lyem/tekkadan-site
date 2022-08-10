@@ -21,7 +21,7 @@ export const NavWrapper = styled.div<NavProps>`
 `
 
 export const WrapperChild = styled.div`
-  height: 93.4vh;
+  height: calc(100vh - 62px);
   overflow: hidden;
   overflow-y: scroll;
 `

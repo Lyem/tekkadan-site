@@ -44,14 +44,14 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
   }, [cookies])
 
   return (
-    <>
+    <S.WrapperRoot>
       <Head>
         <title>
           Tekkadan | {manga.name} - Capitulo {chapter.chapter} - {chapter.title}
         </title>
       </Head>
+      <NavBar />
       <S.Wrapper>
-        <NavBar />
         <S.SideMenu open={open}>
           <S.cover url={manga.background_photo}>
             <S.infos>
@@ -197,7 +197,7 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
           <Footer />
         </S.Reader>
       </S.Wrapper>
-    </>
+    </S.WrapperRoot>
   )
 }
 

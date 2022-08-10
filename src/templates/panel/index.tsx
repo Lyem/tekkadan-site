@@ -33,14 +33,14 @@ const Panel = ({ children }: PanelProps) => {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              height: '93.4vh'
+              height: 'calc(100vh - 62px)'
             }}
             className="rs-theme-dark"
             collapsible
           >
             <Sidenav
               expanded={expand}
-              style={{ minHeight: '93.3vh' }}
+              style={{ minHeight: 'calc(100vh - 62px)' }}
               //defaultOpenKeys={['3']}
             >
               <Sidenav.Body
