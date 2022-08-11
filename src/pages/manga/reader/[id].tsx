@@ -83,6 +83,12 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
             <IconButton>
               <Icon size={25} icon="icon-love" />
             </IconButton>
+            <IconButton>
+              <Icon size={25} icon="icon-back-arrow" />
+            </IconButton>
+            <IconButton>
+              <Icon size={25} icon="icon-forward" />
+            </IconButton>
             <div>
               <IconButton
                 id="config"
