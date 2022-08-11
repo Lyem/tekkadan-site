@@ -244,7 +244,8 @@ export const ResultNotfound = styled.h2`
 
 export const TitleSeparate = styled.hr`
   ${({ theme }) => css`
-    color: ${theme.colors.contrast};
+    border-color: ${theme.colors.contrast};
+    margin-top: -15px;
   `}
 `
 
