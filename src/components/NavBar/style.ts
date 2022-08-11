@@ -249,6 +249,12 @@ export const TitleSeparate = styled.hr`
   `}
 `
 
+export const Loading = styled.div`
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+`
+
 export const SearchTextFild = styled.div`
   ${media.lessThan('large')`
     display: none;

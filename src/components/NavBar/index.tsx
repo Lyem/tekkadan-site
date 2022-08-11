@@ -196,7 +196,9 @@ const NavBar = ({ transparency = false, fixed = false }: NavBarProps) => {
                 </S.TitleResult>
                 <S.TitleSeparate className="result"></S.TitleSeparate>
                 {loading ? (
-                  <Logo animate={true} animateType="infinit" size="small" />
+                  <S.Loading>
+                    <Logo animate={true} animateType="infinit" size="small" />
+                  </S.Loading>
                 ) : searchResult.mangas.length == 0 ? (
                   <S.ResultNotfound className="result">
                     Nada encontrado
@@ -217,7 +219,9 @@ const NavBar = ({ transparency = false, fixed = false }: NavBarProps) => {
                 </S.TitleResult>
                 <S.TitleSeparate className="result"></S.TitleSeparate>
                 {loading ? (
-                  <Logo animate={true} animateType="infinit" size="small" />
+                  <S.Loading>
+                    <Logo animate={true} animateType="infinit" size="small" />
+                  </S.Loading>
                 ) : searchResult.users.length == 0 ? (
                   <S.ResultNotfound className="result">
                     Nada encontrado
