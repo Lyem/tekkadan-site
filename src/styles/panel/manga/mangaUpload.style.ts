@@ -56,7 +56,7 @@ export const Infos = styled.div`
 `
 
 export const WrapperButton = styled.div`
-  top: 8%;
+  top: 69px;
   position: fixed;
   display: flex;
   width: 80%;
@@ -65,7 +65,7 @@ export const WrapperButton = styled.div`
 `
 
 export const WrapperButton2 = styled.div`
-  top: 13%;
+  top: 115px;
   position: fixed;
   display: flex;
   width: 80%;
