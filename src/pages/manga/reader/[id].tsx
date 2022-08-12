@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 import Footer from '../../../components/Footer'
 import NavBar from '../../../components/NavBar'
 import { MangaChapter } from '../../../Interfaces/MangaChapterInterface'
@@ -22,16 +21,23 @@ export type CapsProps = {
 }
 
 const MangaReader = ({ chapter, manga }: CapsProps) => {
-  const router = useRouter()
-  const { id } = router.query
   const cookies = parseCookies()
 
   const [open, setOpen] = useState(false)
   const [config, setConfig] = useState(false)
   const [size, setSize] = useState(35)
   const [quality, setQuality] = useState(100)
+  const [caps, setCaps] = useState([] as MangaChapter[])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    if (loading) {
+      setLoading(false)
+      const chapterService = new MangaChapterService()
+
+      chapterService.getMangaAllCapsById(manga.id).then((m) => setCaps(m.data))
+    }
+
     if (cookies.NAV_OPEN) {
       setOpen(cookies.NAV_OPEN === 'true')
     }
@@ -41,7 +47,7 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
     if (cookies.READER_QUALITY) {
       setQuality(+cookies.READER_QUALITY)
     }
-  }, [cookies])
+  }, [cookies, manga.id, loading])
 
   return (
     <S.WrapperRoot>
@@ -59,7 +65,15 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
               <S.infosTitle>{manga.name}</S.infosTitle>
             </S.infos>
           </S.cover>
+          <S.WrapperCaps>
+            {caps.map((cap, i) => (
+              <S.Cap key={i}>
+                Capitulo {cap.chapter} - {cap.title}
+              </S.Cap>
+            ))}
+          </S.WrapperCaps>
         </S.SideMenu>
+
         <S.Reader open={open}>
           <S.WrapperMenuButtons open={open}>
             <IconButton

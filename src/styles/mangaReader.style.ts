@@ -177,3 +177,25 @@ export const Config = styled.li<ConfigProps>`
     ${config ? `transform: rotateX(0);` : `transform: rotateX(-90deg);`}
   `}
 `
+
+export const WrapperCaps = styled.div`
+  overflow: hidden;
+  padding-top: 10px;
+  ${({ theme }) => css`
+    background-color: ${theme.colors.contrast2};
+    margin-top: 200px;
+    height: 100%;
+  `}
+`
+
+export const Cap = styled.p`
+  display: block;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-left: 10px;
+  ${({ theme }) => css`
+    color: ${theme.colors.white2};
+    background-color: ${theme.colors.contrast};
+    border-radius: ${theme.border.radius};
+  `}
+`
