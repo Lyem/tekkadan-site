@@ -93,7 +93,6 @@ export const WrapperMenuButtons = styled.div<OpenProps>`
 
 export const SideMenu = styled.div<OpenProps>`
   height: calc(100% - 62px);
-  z-index: -1;
   width: 320px;
   right: 0;
   position: fixed;
@@ -189,6 +188,7 @@ export const WrapperCaps = styled.div`
 `
 
 export const Cap = styled.p`
+  cursor: pointer;
   display: block;
   margin-left: 10px;
   margin-right: 10px;

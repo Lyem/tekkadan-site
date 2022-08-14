@@ -14,10 +14,49 @@ import { useEffect, useState } from 'react'
 import { Slider } from 'rsuite'
 import debounce from '../../../shared/debounce'
 import { setCookie, parseCookies } from 'nookies'
+import Link from 'next/link'
 
 export type CapsProps = {
   chapter: MangaChapter
   manga: Manga
+}
+
+function useCap(id: number) {
+  const [caps, setCaps] = useState([] as MangaChapter[])
+
+  useEffect(() => {
+    const chapterService = new MangaChapterService()
+    chapterService.getMangaAllCapsById(id).then((c) => setCaps(c.data))
+  }, [id])
+
+  return caps
+}
+
+function useChargeCap(caps: MangaChapter[], next: boolean, idCap: number) {
+  const [id, setId] = useState(0)
+
+  useEffect(() => {
+    caps.map((ch, i) => {
+      if (ch.id === idCap) {
+        if (!next) {
+          if (i != 0) {
+            setId(caps[i - 1].id)
+          } else {
+            setId(0)
+          }
+        }
+        if (next) {
+          if (i != caps.length - 1) {
+            setId(caps[i + 1].id)
+          } else {
+            setId(0)
+          }
+        }
+      }
+    })
+  }, [caps, idCap, next])
+
+  return id
 }
 
 const MangaReader = ({ chapter, manga }: CapsProps) => {
@@ -27,17 +66,11 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
   const [config, setConfig] = useState(false)
   const [size, setSize] = useState(35)
   const [quality, setQuality] = useState(100)
-  const [caps, setCaps] = useState([] as MangaChapter[])
-  const [loading, setLoading] = useState(true)
+  const caps = useCap(manga.id)
+  const nextCh = useChargeCap(caps, true, chapter.id)
+  const previousCh = useChargeCap(caps, false, chapter.id)
 
   useEffect(() => {
-    if (loading) {
-      setLoading(false)
-      const chapterService = new MangaChapterService()
-
-      chapterService.getMangaAllCapsById(manga.id).then((m) => setCaps(m.data))
-    }
-
     if (cookies.NAV_OPEN) {
       setOpen(cookies.NAV_OPEN === 'true')
     }
@@ -47,7 +80,7 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
     if (cookies.READER_QUALITY) {
       setQuality(+cookies.READER_QUALITY)
     }
-  }, [cookies, manga.id, loading])
+  }, [cookies])
 
   return (
     <S.WrapperRoot>
@@ -67,9 +100,11 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
           </S.cover>
           <S.WrapperCaps>
             {caps.map((cap, i) => (
-              <S.Cap key={i}>
-                Capitulo {cap.chapter} - {cap.title}
-              </S.Cap>
+              <Link href={`/manga/reader/${cap.id}`} key={i}>
+                <S.Cap>
+                  Capitulo {cap.chapter} - {cap.title}
+                </S.Cap>
+              </Link>
             ))}
           </S.WrapperCaps>
         </S.SideMenu>
@@ -97,12 +132,28 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
             <IconButton>
               <Icon size={25} icon="icon-love" />
             </IconButton>
-            <IconButton>
-              <Icon size={25} icon="icon-back-arrow" />
-            </IconButton>
-            <IconButton>
-              <Icon size={25} icon="icon-forward" />
-            </IconButton>
+            {previousCh == 0 ? (
+              <IconButton disabled>
+                <Icon size={25} icon="icon-back-arrow" />
+              </IconButton>
+            ) : (
+              <Link href={`/manga/reader/${previousCh}`}>
+                <IconButton>
+                  <Icon size={25} icon="icon-back-arrow" />
+                </IconButton>
+              </Link>
+            )}
+            {nextCh == 0 ? (
+              <IconButton disabled>
+                <Icon size={25} icon="icon-forward" />
+              </IconButton>
+            ) : (
+              <Link href={`/manga/reader/${nextCh}`}>
+                <IconButton>
+                  <Icon size={25} icon="icon-forward" />
+                </IconButton>
+              </Link>
+            )}
             <div>
               <IconButton
                 id="config"
