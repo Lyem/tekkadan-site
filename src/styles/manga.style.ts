@@ -129,4 +129,9 @@ export const WrapperVar = styled.div`
   `}
 `
 
+export const CapText = styled.p`
+  margin-top: auto;
+  margin-bottom: auto;
+`
+
 export const Var = styled.p``

@@ -78,12 +78,12 @@ const MangaOverView = ({ manga, chapter }: MangaOverViewProps) => {
                 return (
                   <Link key={i} href={`/manga/reader/${ch.id}`}>
                     <S.Caps>
-                      <p>
+                      <S.CapText>
                         Capitulo {ch.chapter} - {ch.title}
-                      </p>
-                      <p>
+                      </S.CapText>
+                      <S.CapText>
                         {new Date(ch.created_at).toLocaleDateString('pt-BR')}
-                      </p>
+                      </S.CapText>
                     </S.Caps>
                   </Link>
                 )
