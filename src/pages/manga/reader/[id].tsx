@@ -15,6 +15,7 @@ import { Slider } from 'rsuite'
 import debounce from '../../../shared/debounce'
 import { setCookie, parseCookies } from 'nookies'
 import Link from 'next/link'
+import { useRive, useStateMachineInput } from '@rive-app/react-canvas'
 
 export type CapsProps = {
   chapter: MangaChapter
@@ -70,9 +71,27 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
   const nextCh = useChargeCap(caps, true, chapter.id)
   const previousCh = useChargeCap(caps, false, chapter.id)
 
+  const STATE_MACHINE_NAME = 'Basic State Macine'
+  const INPUT_NAME = 'Switch'
+  const { rive, RiveComponent } = useRive({
+    src: '/rive/hamburger_time.riv',
+    stateMachines: STATE_MACHINE_NAME,
+    autoplay: true
+  })
+
+  const onClickInput = useStateMachineInput(
+    rive,
+    STATE_MACHINE_NAME,
+    INPUT_NAME
+  )
+
   useEffect(() => {
     if (cookies.NAV_OPEN) {
       setOpen(cookies.NAV_OPEN === 'true')
+
+      if (cookies.NAV_OPEN === 'true') {
+        onClickInput?.fire()
+      }
     }
     if (cookies.READER_ZOOM) {
       setSize(+cookies.READER_ZOOM)
@@ -80,7 +99,7 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
     if (cookies.READER_QUALITY) {
       setQuality(+cookies.READER_QUALITY)
     }
-  }, [cookies])
+  }, [cookies, onClickInput])
 
   return (
     <S.WrapperRoot>
@@ -118,14 +137,12 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
                   path: '/manga/reader/'
                 })
                 setOpen(!open)
+                onClickInput?.fire()
               }}
             >
-              {open ? (
-                <Icon size={25} icon="icon-forward" />
-              ) : (
-                <Icon size={25} icon="icon-back-arrow" />
-              )}
+              <RiveComponent style={{ height: '25px', width: '25px' }} />
             </IconButton>
+
             <IconButton>
               <Icon size={25} icon="icon-chat" />
             </IconButton>

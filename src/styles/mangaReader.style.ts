@@ -179,11 +179,13 @@ export const Config = styled.li<ConfigProps>`
 
 export const WrapperCaps = styled.div`
   overflow: hidden;
+  overflow-y: scroll;
   padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 200px;
+  height: 53vh;
   ${({ theme }) => css`
     background-color: ${theme.colors.contrast2};
-    margin-top: 200px;
-    height: 100%;
   `}
 `
 
