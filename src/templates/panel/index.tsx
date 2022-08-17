@@ -9,6 +9,7 @@ import PageIcon from '@rsuite/icons/Page'
 import OthersIcon from '@rsuite/icons/Others'
 import { setCookie, parseCookies } from 'nookies'
 import Router from 'next/router'
+import Footer from '../../components/Footer'
 
 type PanelProps = {
   children: React.ReactNode
@@ -148,7 +149,10 @@ const Panel = ({ children }: PanelProps) => {
             </Sidenav>
           </Sidebar>
         </S.NavWrapper>
-        <S.WrapperChild>{children}</S.WrapperChild>
+        <S.WrapperChild>
+          {children}
+          <Footer />
+        </S.WrapperChild>
       </S.Wrapper>
     </>
   )

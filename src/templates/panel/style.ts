@@ -21,7 +21,10 @@ export const NavWrapper = styled.div<NavProps>`
 `
 
 export const WrapperChild = styled.div`
+  display: flex;
   height: calc(100vh - 62px);
   overflow: hidden;
   overflow-y: scroll;
+  flex-direction: column;
+  justify-content: space-between;
 `
