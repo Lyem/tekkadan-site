@@ -65,8 +65,11 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
 
   const [open, setOpen] = useState(false)
   const [config, setConfig] = useState(false)
+  const [load, setLoad] = useState(true)
   const [size, setSize] = useState(35)
   const [quality, setQuality] = useState(100)
+  const [sizeView, setSizeView] = useState(35)
+  const [qualityView, setQualityView] = useState(100)
   const caps = useCap(manga.id)
   const nextCh = useChargeCap(caps, true, chapter.id)
   const previousCh = useChargeCap(caps, false, chapter.id)
@@ -86,20 +89,25 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
   )
 
   useEffect(() => {
-    if (cookies.NAV_OPEN) {
-      setOpen(cookies.NAV_OPEN === 'true')
+    if (load) {
+      setLoad(false)
+      if (cookies.NAV_OPEN) {
+        setOpen(cookies.NAV_OPEN === 'true')
 
-      if (cookies.NAV_OPEN === 'true') {
-        onClickInput?.fire()
+        if (cookies.NAV_OPEN === 'true') {
+          onClickInput?.fire()
+        }
+      }
+      if (cookies.READER_ZOOM) {
+        setSize(+cookies.READER_ZOOM)
+        setSizeView(+cookies.READER_ZOOM)
+      }
+      if (cookies.READER_QUALITY) {
+        setQuality(+cookies.READER_QUALITY)
+        setQualityView(+cookies.READER_QUALITY)
       }
     }
-    if (cookies.READER_ZOOM) {
-      setSize(+cookies.READER_ZOOM)
-    }
-    if (cookies.READER_QUALITY) {
-      setQuality(+cookies.READER_QUALITY)
-    }
-  }, [cookies, onClickInput])
+  }, [cookies, onClickInput, load])
 
   return (
     <S.WrapperRoot>
@@ -213,13 +221,14 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
                 <S.confTitle>Zoom:</S.confTitle>
                 <Slider
                   className="rs-theme-dark"
-                  value={size}
+                  value={sizeView}
                   min={10}
                   step={5}
                   max={100}
                   graduated
                   progress
                   onChange={(mark) => {
+                    setSizeView(mark)
                     debounce(() => {
                       setCookie(null, 'READER_ZOOM', `${mark}`, {
                         maxAge: 86400 * 7,
@@ -233,13 +242,14 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
                 <S.confTitle>Qualidade:</S.confTitle>
                 <Slider
                   className="rs-theme-dark"
-                  value={quality}
+                  value={qualityView}
                   min={10}
                   step={10}
                   max={100}
                   graduated
                   progress
                   onChange={(mark) => {
+                    setQualityView(mark)
                     debounce(() => {
                       setCookie(null, 'READER_QUALITY', `${mark}`, {
                         maxAge: 86400 * 7,
