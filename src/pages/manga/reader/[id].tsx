@@ -16,6 +16,7 @@ import debounce from '../../../shared/debounce'
 import { setCookie, parseCookies } from 'nookies'
 import Link from 'next/link'
 import { useRive, useStateMachineInput } from '@rive-app/react-canvas'
+import Button from '../../../components/Button'
 
 export type CapsProps = {
   chapter: MangaChapter
@@ -291,6 +292,17 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
                 />
               )
             })}
+            <S.NextCap>
+              {nextCh == 0 ? (
+                <Button disabled fullWidth={true}>
+                  Último Capítulo Alcançado
+                </Button>
+              ) : (
+                <Link href={`/manga/reader/${nextCh}`}>
+                  <Button fullWidth={true}>Próximo capítulo</Button>
+                </Link>
+              )}
+            </S.NextCap>
           </S.Image>
           <Footer />
         </S.Reader>

@@ -201,3 +201,7 @@ export const Cap = styled.p`
     border-radius: ${theme.border.radius};
   `}
 `
+
+export const NextCap = styled.div`
+  margin-top: 10px;
+`
