@@ -15,13 +15,9 @@ export const Title = styled.h1`
 export const Loading = styled.div`
   width: fit-content;
   height: fit-content;
-  position: absolute;
-  top: 40%;
-  -ms-transform: translateY(-40%);
-  transform: translateY(-40%);
-  left: 55%;
-  -ms-transform: translatex(-55%);
-  transform: translatex(-55%);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
   & > ${Title} {
     margin-left: -15%;
   }
