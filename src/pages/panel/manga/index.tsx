@@ -32,7 +32,7 @@ const Mangas = () => {
   }
 
   return (
-    <Panel>
+    <Panel openKey="sub1" keys="/panel/manga">
       <S.Wrapper>
         <Table height={850} data={list} className="rs-theme-dark">
           <Table.Column width={70} align="center" fixed>

@@ -1,9 +1,9 @@
-export const base = process.env.apiBase
+export const base = process.env.NEXT_PUBLIC_apiBase
 export const csrfCookie = '/sanctum/csrf-cookie'
 export const createUser = 'user'
 export const login = 'auth'
 export const getUserByToken = 'user/me'
-export const image = process.env.apiImage
+export const image = process.env.NEXT_PUBLIC_apiImage
 export const logOut = 'auth'
 export const manga = 'manga'
 export const mangaIds = 'manga/ids'

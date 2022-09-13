@@ -6,16 +6,31 @@ type NavProps = {
 
 export const Wrapper = styled.main<NavProps>`
   display: grid;
-  transition: all 100ms 100ms linear;
-  ${({ expand }) => css`
-    grid: 100% / ${expand ? 260 : 56}px 1fr;
+  transition: all 90ms 90ms linear;
+  ${({ theme, expand }) => css`
+    grid: 100% / ${expand ? 200 : 80}px 1fr;
+    .ant-menu-item-selected {
+      background-color: ${theme.colors.contrast} !important;
+      span {
+        color: ${theme.colors.primary} !important;
+      }
+    }
+    .ant-menu {
+      background-color: ${theme.colors.contrast2};
+    }
+    .ant-menu-sub {
+      background-color: ${theme.colors.contrast2} !important;
+    }
+    .ant-layout-sider {
+      background-color: ${theme.colors.contrast2};
+    }
   `}
 `
 
 export const NavWrapper = styled.div<NavProps>`
-  transition: all 100ms 100ms linear;
+  transition: all 90ms 90ms linear;
   ${({ expand }) => css`
-    width: ${expand ? 260 : 56}px;
+    width: ${expand ? 200 : 80}px;
   `}
   margin-right: 10;
 `

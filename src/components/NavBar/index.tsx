@@ -14,8 +14,6 @@ import { SearchService } from '../../Services/SearchService'
 import { Search } from '../../Interfaces/SearchInterface'
 import MangaList from '../MangaList'
 import UserList from '../UserList'
-import { Badge } from 'rsuite'
-import '../../styles/rsuite.theme.less'
 
 export type NavBarProps = {
   logged?: boolean
