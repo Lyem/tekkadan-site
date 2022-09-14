@@ -20,7 +20,7 @@ import PanelLoading from '../../../../components/PanelLoading'
 import NotFound from '../../../../components/404'
 import Toast from '../../../../components/Toast'
 import { ToastI } from '../../../../Interfaces/ToastInterface'
-import { Modal, Progress } from 'rsuite'
+import { Modal, Progress } from 'antd'
 
 registerPlugin(
   FilePondPluginImagePreview,
@@ -51,9 +51,6 @@ const MangaUpload = () => {
   const [modal, setModal] = useState(false)
 
   const [upload, setUpload] = useState(0)
-
-  const [status, setStatus] = useState(undefined)
-  const [color, setColor] = useState('#3385ff')
 
   const showToast = (message: ToastI) => {
     setList([...list, message] as never)
@@ -97,9 +94,7 @@ const MangaUpload = () => {
           }
         )
         .then(() => {
-          setColor('#52c41a')
           // @ts-ignore
-          setStatus('success')
           showToast({
             id: list.length,
             title: 'Sucesso',
@@ -113,9 +108,7 @@ const MangaUpload = () => {
           setUpload(0)
         })
         .catch((error) => {
-          setColor('#7a0909')
           // @ts-ignore
-          setStatus('fail')
           const err = error as AxiosError
           if (err.response?.status == 401) {
             showToast({
@@ -146,8 +139,6 @@ const MangaUpload = () => {
         backgroundColor: '#4f0505'
       })
     }
-    setStatus(undefined)
-    setColor('#3385ff')
   }
 
   const handleInputManga = (field: string, value: string) => {
@@ -198,37 +189,37 @@ const MangaUpload = () => {
   }, [getManga, id, loading, mangaChapterService])
   if (loading) {
     return (
-      <Panel>
+      <Panel openKey="sub1" keys="/panel/manga/upload">
         <PanelLoading />
       </Panel>
     )
   } else {
     if (notFound) {
       return (
-        <Panel>
+        <Panel openKey="sub1" keys="/panel/manga/upload">
           <Toast toastlist={list} setlist={setList}></Toast>
           <NotFound />
         </Panel>
       )
     }
     return (
-      <Panel>
+      <Panel openKey="sub1" keys="/panel/manga/upload">
         <>
           <Head>
             <title>Tekkadan | Upload {manga.name}</title>
           </Head>
           <S.Wrapper>
             <Toast toastlist={list} setlist={setList}></Toast>
-            <Modal className="rs-theme-dark" size="sm" open={modal}>
-              <Modal.Body>
-                <S.UploadWrapper>
-                  <Progress.Circle
-                    percent={upload}
-                    strokeColor={color}
-                    status={status}
-                  />
-                </S.UploadWrapper>
-              </Modal.Body>
+            <Modal
+              title="Upando manga"
+              centered
+              open={modal}
+              closable={false}
+              footer={[]}
+            >
+              <S.UploadWrapper>
+                <Progress type="circle" percent={upload} />
+              </S.UploadWrapper>
             </Modal>
             <S.Manga>
               <S.Image>
