@@ -1,80 +1,76 @@
-import { Table } from 'rsuite'
 import Panel from '../../../templates/panel'
 import * as S from '../../../styles/panel/manga/manga.style'
 import { MangaService } from '../../../Services/MangaService'
 import { useEffect, useState } from 'react'
 import PanelLoading from '../../../components/PanelLoading'
-//import { Manga2 } from '../../../Interfaces/Manga2Interface'
+import { Popconfirm, Space, Table } from 'antd'
+import Link from 'next/link'
+import { MangaList } from '../../../Interfaces/MangaListInterface'
+import { QuestionCircleOutlined } from '@ant-design/icons'
 
 const Mangas = () => {
   const [loading, setLoading] = useState(true)
-  const [list, setList] = useState([])
+  interface DataType {
+    key: React.Key
+    id: number
+    name: string
+    sinopse: number
+    views: string
+  }
+
+  const [list, setList] = useState({} as MangaList)
 
   const fetchAllMangas = async () => {
     const manga = new MangaService()
     const mangas = await manga.getAll()
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    setList(mangas.data.data)
+    setList(mangas.data)
     setLoading(false)
   }
 
+  const { Column } = Table
+
   useEffect(() => {
     fetchAllMangas()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  if (loading) {
-    return (
-      <Panel>
-        <PanelLoading />
-      </Panel>
-    )
-  }
+  // if (loading) {
+  //   return (
+  //     <Panel>
+  //       <PanelLoading />
+  //     </Panel>
+  //   )
+  // }
 
   return (
     <Panel openKey="sub1" keys="/panel/manga">
       <S.Wrapper>
-        <Table height={850} data={list} className="rs-theme-dark">
-          <Table.Column width={70} align="center" fixed>
-            <Table.HeaderCell>Id</Table.HeaderCell>
-            <Table.Cell dataKey="id" />
-          </Table.Column>
-
-          <Table.Column width={300} fixed>
-            <Table.HeaderCell>Nome</Table.HeaderCell>
-            <Table.Cell dataKey="name" />
-          </Table.Column>
-
-          <Table.Column width={690}>
-            <Table.HeaderCell>Sinopse</Table.HeaderCell>
-            <Table.Cell dataKey="synopsis" />
-          </Table.Column>
-
-          <Table.Column width={200}>
-            <Table.HeaderCell>views</Table.HeaderCell>
-            <Table.Cell dataKey="views" />
-          </Table.Column>
-
-          <Table.Column width={250}>
-            <Table.HeaderCell>Action</Table.HeaderCell>
-
-            <Table.Cell>
-              {(rowData) => {
-                function handleAction() {
-                  alert(`id:${rowData.id}`)
-                }
-
-                return (
-                  <span>
-                    <a onClick={handleAction}> Editar </a> |{' '}
-                    <a onClick={handleAction}> Caps </a> |{' '}
-                    <a href={`/panel/manga/upload/${rowData.id}`}> Upar </a> |{' '}
-                    <a onClick={handleAction}> Deletar </a>
-                  </span>
-                )
-              }}
-            </Table.Cell>
-          </Table.Column>
+        <Table pagination={list} loading={loading} dataSource={list.data}>
+          <Column title="Id" dataIndex="id" key="id" />
+          <Column title="Nome" dataIndex="name" key="name" />
+          <Column title="Sinopse" dataIndex="synopsis" key="synopsis" />
+          <Column title="Views" dataIndex="views" key="views" />
+          <Column
+            title="Ações"
+            key="action"
+            render={(record: DataType) => (
+              <Space size="middle">
+                <a style={{ color: 'white' }}>Editar</a>
+                <a style={{ color: 'white' }}>Caps</a>
+                <Link href={`/panel/manga/upload/${record.id}`}>
+                  <a style={{ color: 'white' }}>Upar</a>
+                </Link>
+                <Popconfirm
+                  title="Você tem certeza?"
+                  icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+                  cancelText="Não"
+                  okText="Sim"
+                >
+                  <a style={{ color: 'red' }}>Deletar</a>
+                </Popconfirm>
+              </Space>
+            )}
+          />
         </Table>
       </S.Wrapper>
     </Panel>
