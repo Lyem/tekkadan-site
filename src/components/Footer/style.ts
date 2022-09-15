@@ -8,7 +8,7 @@ export const Wrapper = styled.footer`
   `}
   position: relative;
   width: 100%;
-  min-height: 100px;
+  min-height: 150px;
   padding: 20px 50px;
   display: flex;
   justify-content: center;
@@ -20,6 +20,7 @@ export const SocialWrapper = styled.ul`
   position: relative;
   display: flex;
   justify-content: center;
+  z-index: 1000;
   align-items: center;
   margin: 10px 0;
 `
