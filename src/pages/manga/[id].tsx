@@ -10,6 +10,10 @@ import { MangaChapterService } from '../../Services/MangaChapterService'
 import Link from 'next/link'
 import { MangaChapter } from '../../Interfaces/MangaChapterInterface'
 import Tag from '../../components/Tag'
+import moment from 'moment'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const idLocale = require('moment/locale/pt-br')
+moment.updateLocale('pt-br', idLocale)
 
 export type MangaOverViewProps = {
   manga: Manga
@@ -81,9 +85,7 @@ const MangaOverView = ({ manga, chapter }: MangaOverViewProps) => {
                       <S.CapText>
                         Capitulo {ch.chapter} - {ch.title}
                       </S.CapText>
-                      <S.CapText>
-                        {new Date(ch.created_at).toLocaleDateString('pt-BR')}
-                      </S.CapText>
+                      <S.CapText>{moment(ch.created_at).fromNow()}</S.CapText>
                     </S.Caps>
                   </Link>
                 )
