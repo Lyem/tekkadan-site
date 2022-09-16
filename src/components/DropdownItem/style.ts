@@ -52,6 +52,8 @@ export const WrapperIcon = styled.div`
   align-items: center;
   & > p {
     margin-left: 0.8rem;
+    margin-top: auto;
+    margin-bottom: auto;
   }
 `
 
