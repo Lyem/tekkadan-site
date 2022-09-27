@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app'
 import GlobalStyles from '../styles/global'
 import { ThemeProvider } from 'styled-components'
 import theme from '../styles/theme'
+import '../styles/ant.css'
 import NextNProgress from 'nextjs-progressbar'
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -38,6 +39,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         stopDelayMs={0}
         height={3}
         showOnShallow={true}
+        options={{ showSpinner: false }}
       />
       <Component {...pageProps} />
     </ThemeProvider>
