@@ -7,23 +7,8 @@ type NavProps = {
 export const Wrapper = styled.main<NavProps>`
   display: grid;
   transition: all 90ms 90ms linear;
-  ${({ theme, expand }) => css`
+  ${({ expand }) => css`
     grid: 100% / ${expand ? 200 : 80}px 1fr;
-    .ant-menu-item-selected {
-      background-color: ${theme.colors.contrast} !important;
-      span {
-        color: ${theme.colors.primary} !important;
-      }
-    }
-    .ant-menu {
-      background-color: ${theme.colors.contrast2};
-    }
-    .ant-menu-sub {
-      background-color: ${theme.colors.contrast2} !important;
-    }
-    .ant-layout-sider {
-      background-color: ${theme.colors.contrast2};
-    }
   `}
 `
 
