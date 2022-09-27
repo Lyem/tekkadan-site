@@ -1,0 +1,130 @@
+@import '~antd/dist/antd.dark.less';
+
+@primary: #B61D1D;
+@primary2: #8C1313;
+@primary3: #600A0A;
+@secondary: #1AAD5E;
+@contrast: #272323;
+@contrast2: #1C1919;
+@contrast3: #100F0F;
+@black: #0B0101;
+@white: #FAFAFA;
+@white2: #DADADA;
+@white3: #969696;
+@yellow: #FDD308;
+
+
+@primary-color: @primary; // primary color for all components
+@link-color: @white; // link color
+@success-color: #52c41a; // success state color
+@warning-color: #faad14; // warning state color
+@error-color: #f5222d; // error state color
+@font-size-base: 14px; // major text font size
+@heading-color: @white; // heading text color
+@text-color: @white; // major text color
+@text-color-secondary: @white2; // secondary text color
+@disabled-color: @white3; // disable state color
+@border-radius-base: 2px; // major border radius
+@border-color-base: @white; // major border color
+@box-shadow-base: @contrast; // major shadow for layers
+
+
+@component-background: @contrast2;
+
+
+
+// Table
+// --
+@table-header-bg: @contrast;
+@table-row-hover-bg: fade(@contrast, 55%);
+@table-header-cell-split-color: fade(@white3, 10%);
+
+// Select
+// ---
+@select-background: @contrast2;
+@select-dropdown-bg:@contrast2;
+@select-item-selected-bg: fade(@contrast, 70%);
+@select-item-active-bg: fade(@contrast, 30%);
+@select-border-color: transparent;
+@select-selection-item-border-color: transparent;
+
+// Input
+@input-hover-border-color: transparent;
+
+// Border
+@border-color-base: transparent;
+@border-color-split: transparent;
+// @border-style-base: none;
+
+// Shadow
+@box-shadow-base: @yellow;
+
+// Outline
+@outline-color: transparent;
+@outline-width: 0px;
+@outline-fade: 0%;
+
+// Icon
+@icon-color: @white;
+
+// Border color
+@border-color-base: transparent; // base border outline a component
+@border-color-split: transparent; // split border inside a component
+
+@background-color-light: @yellow; // background of header and selected item
+@background-color-base: @yellow; // Default grey background color
+
+.ant-menu-item-selected {
+  background-color: @contrast2 !important;
+  span {
+    color: @primary !important;
+  }
+}
+.ant-menu {
+  background-color: @contrast2 !important;
+}
+.ant-menu-sub {
+  background-color:@contrast2 !important;
+}
+.ant-layout-sider {
+  background-color: @contrast2 !important;
+}
+.ant-layout-sider-trigger {
+  background-color: @contrast2 !important;
+}
+.ant-menu-sub {
+  background-color: @contrast2 !important;
+}
+
+.ant-pagination-item {
+  border-color: @white2 !important;
+  a {
+    color: @white2 !important;
+  }
+}
+.ant-pagination-item-active {
+  border-color: @primary !important;
+  a {
+    color: @primary !important;
+  }
+}
+.ant-pagination-item-link {
+  border-color: @white2 !important;
+  span {
+    color: @white2 !important;
+  }
+}
+.ant-pagination-item-link:disabled {
+  border-color: @contrast !important;
+  span {
+    color: @contrast !important;
+  }
+}
+
+.ant-select-focused .ant-select-selector,
+.ant-select-selector:focus,
+.ant-select-selector:active,
+.ant-select-open .ant-select-selector {
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
