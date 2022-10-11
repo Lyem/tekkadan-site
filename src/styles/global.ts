@@ -1,5 +1,4 @@
 import { createGlobalStyle, css } from 'styled-components'
-import 'antd/dist/antd.dark.css'
 const GlobalStyles = createGlobalStyle`
   @font-face {
     font-family: 'icomoon';
