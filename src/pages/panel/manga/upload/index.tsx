@@ -17,7 +17,7 @@ const SelectManga = () => {
   const searchService = new SearchService()
 
   return (
-    <Panel>
+    <Panel openKey={['sub1']} keys="/panel/manga/upload">
       <S.Wrapper>
         <S.WrapperSearch>
           <TextField

@@ -43,7 +43,7 @@ const Mangas = () => {
   // }
 
   return (
-    <Panel openKey="sub1" keys="/panel/manga">
+    <Panel openKey={['sub1']} keys="/panel/manga">
       <S.Wrapper>
         <Table pagination={list} loading={loading} dataSource={list.data}>
           <Column title="Id" dataIndex="id" key="id" />
@@ -63,7 +63,7 @@ const Mangas = () => {
                 <Popconfirm
                   title="Você tem certeza?"
                   icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
-                  cancelText="Não"
+                  cancelText="Cancelar"
                   okText="Sim"
                 >
                   <a style={{ color: 'red' }}>Deletar</a>

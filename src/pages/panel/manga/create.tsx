@@ -15,8 +15,6 @@ import * as S from '../../../styles/panel/manga/mangaCreate.style'
 import TextField from '../../../components/TextField'
 import Button from '../../../components/Button'
 import TextArea from '../../../components/TextArea'
-import Select from '../../../components/Select'
-import { TagPicker } from 'rsuite'
 import { useEffect, useState } from 'react'
 import PanelLoading from '../../../components/PanelLoading'
 import { StatusService } from '../../../Services/StatusService'
@@ -27,6 +25,7 @@ import { MangaService } from '../../../Services/MangaService'
 import Toast from '../../../components/Toast'
 import { ToastI } from '../../../Interfaces/ToastInterface'
 import Head from 'next/head'
+import { Select } from 'antd'
 
 registerPlugin(
   FilePondPluginImagePreview,
@@ -173,14 +172,14 @@ const MangaCreate = () => {
 
   if (loading) {
     return (
-      <Panel>
+      <Panel openKey={['sub1']} keys="/panel/manga/create">
         <PanelLoading />
       </Panel>
     )
   }
 
   return (
-    <Panel>
+    <Panel openKey={['sub1']} keys="/panel/manga/create">
       <>
         <Head>
           <title>Tekkadan | Criar Mangá</title>
@@ -267,6 +266,28 @@ const MangaCreate = () => {
               ></TextArea>
               <S.Title>Formato:</S.Title>
               <Select
+                showSearch
+                style={{ width: '100%' }}
+                optionFilterProp="children"
+                onChange={(v) => handleInput('format', v)}
+                filterOption={(input, option) =>
+                  (option!.children as unknown as string).includes(input)
+                }
+                filterSort={(optionA, optionB) =>
+                  (optionA!.children as unknown as string)
+                    .toLowerCase()
+                    .localeCompare(
+                      (optionB!.children as unknown as string).toLowerCase()
+                    )
+                }
+              >
+                {formats.map((format, i) => (
+                  <option value={format.value} key={i}>
+                    {format.label}
+                  </option>
+                ))}
+              </Select>
+              {/* <Select
                 onSelectChange={(v) => handleInput('format', v)}
                 backgroundColor="contrast2"
                 required
@@ -277,10 +298,32 @@ const MangaCreate = () => {
                     {format.label}
                   </option>
                 ))}
-              </Select>
+              </Select> */}
               <S.Title>Status:</S.Title>
               <Select
-                onSelectChange={(v) => handleInput('status', v)}
+                showSearch
+                style={{ width: '100%' }}
+                optionFilterProp="children"
+                onChange={(v) => handleInput('status', v)}
+                filterOption={(input, option) =>
+                  (option!.children as unknown as string).includes(input)
+                }
+                filterSort={(optionA, optionB) =>
+                  (optionA!.children as unknown as string)
+                    .toLowerCase()
+                    .localeCompare(
+                      (optionB!.children as unknown as string).toLowerCase()
+                    )
+                }
+              >
+                {status.map((status, i) => (
+                  <option value={status.value} key={i}>
+                    {status.label}
+                  </option>
+                ))}
+              </Select>
+              {/* <Select
+                //onSelectChange={(v) => handleInput('status', v)}
                 backgroundColor="contrast2"
                 required
               >
@@ -290,21 +333,49 @@ const MangaCreate = () => {
                     {status.label}
                   </option>
                 ))}
-              </Select>
+              </Select> */}
               <S.Title>Generos:</S.Title>
-              <TagPicker
+              <Select
+                mode="multiple"
+                allowClear
+                style={{ width: '100%' }}
+                onChange={(a: string) => handleInput('categories', a)}
+                //defaultValue={['a10', 'c12']}
+                //onChange={handleChange}
+              >
+                {categories.map((category, i) => (
+                  <option value={category.value} key={i}>
+                    {category.label}
+                  </option>
+                ))}
+              </Select>
+              {/* <TagPicker
                 data={categories}
                 onChange={(a: string) => handleInput('categories', a)}
                 block
                 style={{ borderColor: '#1C1919', borderRadius: 1 }}
-              />
+              /> */}
               <S.Title>Staff:</S.Title>
-              <TagPicker
+              <Select
+                mode="multiple"
+                allowClear
+                style={{ width: '100%' }}
+                onChange={(a: string) => handleInput('staffs', a)}
+                //defaultValue={['a10', 'c12']}
+                //onChange={handleChange}
+              >
+                {peoples.map((people, i) => (
+                  <option value={people.value} key={i}>
+                    {people.label}
+                  </option>
+                ))}
+              </Select>
+              {/* <TagPicker
                 data={peoples}
                 onChange={(a: string) => handleInput('staffs', a)}
                 block
                 style={{ borderColor: '#1C1919', borderRadius: 1 }}
-              />
+              /> */}
             </S.WrapperContent>
             <S.WrapperButton>
               <S.Button>

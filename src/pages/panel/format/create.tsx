@@ -40,7 +40,7 @@ const FormatCreate = () => {
   }
 
   return (
-    <Panel>
+    <Panel openKey={['sub3', 'sub6']} keys="/panel/format/create">
       <Toast toastlist={list} setlist={setList}></Toast>
       <S.Wrapper>
         <form onSubmit={handleSubmit}>

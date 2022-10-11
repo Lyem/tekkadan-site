@@ -189,21 +189,21 @@ const MangaUpload = () => {
   }, [getManga, id, loading, mangaChapterService])
   if (loading) {
     return (
-      <Panel openKey="sub1" keys="/panel/manga/upload">
+      <Panel openKey={['sub1']} keys="/panel/manga/upload">
         <PanelLoading />
       </Panel>
     )
   } else {
     if (notFound) {
       return (
-        <Panel openKey="sub1" keys="/panel/manga/upload">
+        <Panel openKey={['sub1']} keys="/panel/manga/upload">
           <Toast toastlist={list} setlist={setList}></Toast>
           <NotFound />
         </Panel>
       )
     }
     return (
-      <Panel openKey="sub1" keys="/panel/manga/upload">
+      <Panel openKey={['sub1']} keys="/panel/manga/upload">
         <>
           <Head>
             <title>Tekkadan | Upload {manga.name}</title>

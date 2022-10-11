@@ -144,7 +144,7 @@ const PeopleCreate = () => {
   }
 
   return (
-    <Panel>
+    <Panel openKey={['sub3', 'sub4']} keys="/panel/people/create">
       <S.Wrapper>
         <Toast toastlist={list} setlist={setList}></Toast>
         <form onSubmit={handleSubmit}>
