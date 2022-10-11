@@ -14,4 +14,9 @@ export class UserService {
     await axios.get(csrfCookie)
     return await this.userRepository.Login(email, password)
   }
+
+  async Me() {
+    await axios.get(csrfCookie)
+    return await this.userRepository.Me()
+  }
 }

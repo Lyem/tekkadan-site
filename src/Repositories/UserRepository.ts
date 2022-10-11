@@ -1,10 +1,16 @@
 import { UserInterface } from '../Interfaces/UserInterface'
 import { UserRepositoryInterface } from './Contracts/UserRepositoryInterface'
 import axios from '../lib/axios'
-import { createUser, login } from '../shared/api.routes'
+import { createUser, login, me } from '../shared/api.routes'
 import { AxiosResponse } from 'axios'
 
 export class UserRepository implements UserRepositoryInterface {
+  Me(): Promise<AxiosResponse<UserInterface>> {
+    return axios.get(me)
+  }
+  Logout(): Promise<AxiosResponse> {
+    return axios.delete(login + '/12')
+  }
   Login(
     email: string,
     password: string

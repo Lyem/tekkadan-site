@@ -8,4 +8,6 @@ export interface UserRepositoryInterface {
     email: string,
     password: string
   ): Promise<AxiosResponse<UserInterface>>
+  Logout(): Promise<AxiosResponse>
+  Me(): Promise<AxiosResponse<UserInterface>>
 }
