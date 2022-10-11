@@ -11,12 +11,12 @@ import Image from 'next/image'
 import IconButton from '../../../components/IconButton'
 import Icon from '../../../components/Icon'
 import { useEffect, useState } from 'react'
-import { Slider } from 'rsuite'
 import debounce from '../../../shared/debounce'
 import { setCookie, parseCookies } from 'nookies'
 import Link from 'next/link'
 import { useRive, useStateMachineInput } from '@rive-app/react-canvas'
 import Button from '../../../components/Button'
+import { Slider } from 'antd'
 
 export type CapsProps = {
   chapter: MangaChapter
@@ -117,7 +117,7 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
           Tekkadan | {manga.name} - Capitulo {chapter.chapter} - {chapter.title}
         </title>
       </Head>
-      <NavBar />
+      <NavBar className="navBar" />
       <S.Wrapper>
         <S.SideMenu open={open}>
           <S.cover url={manga.background_photo}>
@@ -127,17 +127,32 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
             </S.infos>
           </S.cover>
           <S.WrapperCaps>
-            {caps.map((cap, i) => (
-              <Link href={`/manga/reader/${cap.id}`} key={i}>
-                <S.Cap>
-                  Capitulo {cap.chapter} - {cap.title}
-                </S.Cap>
-              </Link>
-            ))}
+            {caps.map((cap, i) => {
+              if (chapter.id == cap.id) {
+                return (
+                  <S.CapDiv key={i} disable={true}>
+                    <S.Cap>
+                      Capitulo {cap.chapter} - {cap.title}
+                    </S.Cap>
+                  </S.CapDiv>
+                )
+              } else {
+                return (
+                  <Link href={`/manga/reader/${cap.id}#pg-1`} key={i}>
+                    <S.CapDiv disable={false}>
+                      <S.Cap>
+                        Capitulo {cap.chapter} - {cap.title}
+                      </S.Cap>
+                    </S.CapDiv>
+                  </Link>
+                )
+              }
+            })}
           </S.WrapperCaps>
         </S.SideMenu>
 
         <S.Reader open={open}>
+          <NavBar className="MnavBar" />
           <S.WrapperMenuButtons open={open}>
             <IconButton
               onClick={() => {
@@ -163,7 +178,7 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
                 <Icon size={25} icon="icon-back-arrow" />
               </IconButton>
             ) : (
-              <Link href={`/manga/reader/${previousCh}`}>
+              <Link href={`/manga/reader/${previousCh}#pg-1`}>
                 <IconButton>
                   <Icon size={25} icon="icon-back-arrow" />
                 </IconButton>
@@ -174,7 +189,7 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
                 <Icon size={25} icon="icon-forward" />
               </IconButton>
             ) : (
-              <Link href={`/manga/reader/${nextCh}`}>
+              <Link href={`/manga/reader/${nextCh}#pg-1`}>
                 <IconButton>
                   <Icon size={25} icon="icon-forward" />
                 </IconButton>
@@ -226,8 +241,6 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
                   min={10}
                   step={5}
                   max={100}
-                  graduated
-                  progress
                   onChange={(mark) => {
                     setSizeView(mark)
                     debounce(() => {
@@ -247,8 +260,6 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
                   min={10}
                   step={10}
                   max={100}
-                  graduated
-                  progress
                   onChange={(mark) => {
                     setQualityView(mark)
                     debounce(() => {
@@ -276,6 +287,7 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
               return (
                 <Image
                   key={i}
+                  id={`pg-${i + 1}`}
                   alt={`${manga.name} - Capitulo ${chapter.chapter} - pagina ${
                     i + 1
                   }`}
@@ -298,7 +310,7 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
                   Último Capítulo Alcançado
                 </Button>
               ) : (
-                <Link href={`/manga/reader/${nextCh}`}>
+                <Link href={`/manga/reader/${nextCh}#pg-1`}>
                   <Button fullWidth={true}>Próximo capítulo</Button>
                 </Link>
               )}
