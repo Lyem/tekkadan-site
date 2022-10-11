@@ -9,7 +9,7 @@ export type ToastProps = {
 
 const Toast = ({ toastlist, setlist }: ToastProps) => {
   const deleteToast = useCallback(
-    (id) => {
+    (id: number) => {
       const toastListItem = toastlist.filter((e) => e.id !== id)
       console.log(id)
       setlist(toastListItem as never)
