@@ -57,7 +57,8 @@
 // @border-style-base: none;
 
 // Shadow
-@box-shadow-base: @yellow;
+@box-shadow-base: @black;
+@shadow-color: rgba(0, 0, 0, 0.45);
 
 // Outline
 @outline-color: transparent;
@@ -71,8 +72,12 @@
 @border-color-base: transparent; // base border outline a component
 @border-color-split: transparent; // split border inside a component
 
-@background-color-light: @yellow; // background of header and selected item
-@background-color-base: @yellow; // Default grey background color
+@background-color-light: @contrast; // background of header and selected item
+@background-color-base: @black; // Default grey background color
+
+// Button
+@button-color: #757575;
+@btn-shadow: @black;
 
 .ant-menu-item-selected {
   background-color: @contrast2 !important;
