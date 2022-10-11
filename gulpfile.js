@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-var-requires */
 const gulp = require('gulp')
 const gulpless = require('gulp-less')
 const postcss = require('gulp-postcss')
