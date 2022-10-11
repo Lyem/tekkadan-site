@@ -19,15 +19,32 @@ type Url = {
   url: string
 }
 
+type caps = {
+  disable: boolean
+}
+
 export const WrapperRoot = styled.main`
   height: 100vh;
   width: 100vw;
   overflow-y: hidden;
   overflow: hidden;
+  ${media.lessThan('medium')`
+    .navBar {
+      display: none;
+    }
+  `}
+  ${media.greaterThan('medium')`
+    .MnavBar {
+      display: none;
+    }
+  `}
 `
 
 export const Wrapper = styled.div`
   height: calc(100% - 62px);
+  ${media.lessThan('medium')`
+    height: 100%
+  `}
   overflow: hidden;
 `
 
@@ -69,6 +86,7 @@ export const Reader = styled.div<OpenProps>`
   height: 100%;
   overflow: hidden;
   overflow-y: scroll;
+  scroll-behavior: smooth;
   ${({ open }) => css`
     ${open ? `margin-right: 320px;` : `margin-right: 0px;`}
   `}
@@ -89,6 +107,9 @@ export const WrapperMenuButtons = styled.div<OpenProps>`
   & > button {
     margin-bottom: 7px;
   }
+  ${media.lessThan('medium')`
+    display: none
+  `}
 `
 
 export const SideMenu = styled.div<OpenProps>`
@@ -101,6 +122,9 @@ export const SideMenu = styled.div<OpenProps>`
     ${open ? `transform: translateX(0);` : `transform: translateX(100%);`}
     transform-origin: center right;
     transition: all 100ms 100ms linear;
+  `}
+  ${media.lessThan('medium')`
+    display: none
   `}
 `
 
@@ -141,7 +165,7 @@ export const Division = styled.div`
   ${media.lessThan('medium')`
     ${({ theme }) => css`
       margin-bottom: ${theme.spacings.xlarge};
-      width: 100%;
+      width: 90%;
     `}
   `}
 `
@@ -182,23 +206,41 @@ export const WrapperCaps = styled.div`
   overflow-y: scroll;
   padding-top: 10px;
   padding-bottom: 10px;
-  margin-top: 200px;
   height: 53vh;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
   ${({ theme }) => css`
     background-color: ${theme.colors.contrast2};
+  `};
+  p {
+    margin-bottom: 0px;
+  }
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+`
+
+export const CapDiv = styled.div<caps>`
+  display: grid;
+  align-items: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-left: 10px;
+  height: fit-content;
+  ${({ theme, disable }) => css`
+    ${disable ? 'cursor: not-allowed;' : 'cursor: pointer;'}
+    ${disable
+      ? `background-color: ${theme.colors.contrast3};`
+      : `background-color: ${theme.colors.contrast};`}
+    border-radius: ${theme.border.radius};
   `}
 `
 
 export const Cap = styled.p`
-  cursor: pointer;
-  display: block;
-  margin-left: 10px;
-  margin-right: 10px;
-  padding-left: 10px;
   ${({ theme }) => css`
     color: ${theme.colors.white2};
-    background-color: ${theme.colors.contrast};
-    border-radius: ${theme.border.radius};
   `}
 `
 
