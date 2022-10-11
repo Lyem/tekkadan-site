@@ -7,5 +7,8 @@ module.exports = {
   images: {
     domains: ['tekkadan.test'],
     formats: ['image/avif', 'image/webp']
+  },
+  compiler: {
+    styledComponents: true
   }
 }
