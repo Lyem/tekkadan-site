@@ -253,6 +253,7 @@ export const Loading = styled.div`
   width: fit-content;
   margin-left: auto;
   margin-right: auto;
+  padding-top: 10px;
 `
 
 export const SearchTextFild = styled.div`

@@ -3,31 +3,36 @@ import Link from 'next/link'
 import Logo from '../Logo'
 import TextField from '../TextField'
 import * as S from './style'
-import { useState, useEffect } from 'react'
-import * as r from '../../shared/api.routes'
+import React, { useState, useEffect } from 'react'
 import Icon from '../Icon'
 import DropdownItem from '../DropdownItem'
-import axios from 'axios'
 import Router from 'next/router'
 import debounce from '../../shared/debounce'
 import { SearchService } from '../../Services/SearchService'
 import { Search } from '../../Interfaces/SearchInterface'
 import MangaList from '../MangaList'
 import UserList from '../UserList'
+import { Empty, Spin } from 'antd'
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from '../../store'
+import { logout } from '../../store/userSlices'
 
 export type NavBarProps = {
-  logged?: boolean
   transparency?: boolean
   fixed?: boolean
+  className?: string
 }
 
-const NavBar = ({ transparency = false, fixed = false }: NavBarProps) => {
-  const [values, setValues] = useState({
-    user: { owner: false, profile_photo: '', token: '' },
-    logged: false
-  })
-
+const NavBar = ({
+  transparency = false,
+  fixed = false,
+  className = ''
+}: NavBarProps) => {
   const searchService = new SearchService()
+
+  const user = useSelector((state: RootState) => state.user)
+
+  const dispatch = useDispatch()
 
   const [loading, setLoading] = useState(false)
 
@@ -38,22 +43,7 @@ const NavBar = ({ transparency = false, fixed = false }: NavBarProps) => {
 
   const handleClick = async () => {
     try {
-      const response = await axios.delete(r.logOut, {
-        headers: {
-          Accept: 'application/json',
-          Authorization: 'Bearer ' + values.user.token
-        }
-      })
-      console.log(response.data)
-      //localStorage.removeItem('user')
-      setValues({
-        user: {
-          owner: false,
-          profile_photo: '',
-          token: ''
-        },
-        logged: false
-      })
+      dispatch(logout())
       Router.push('/')
     } catch (err) {
       console.log(err)
@@ -76,7 +66,7 @@ const NavBar = ({ transparency = false, fixed = false }: NavBarProps) => {
   })
 
   return (
-    <S.WrapperClass transparency={transparency}>
+    <S.WrapperClass className={className} transparency={transparency}>
       <S.Wrapper className="noScroll" fixed={fixed}>
         <S.WrapperLinks>
           <S.HamburgerMenu>
@@ -92,7 +82,7 @@ const NavBar = ({ transparency = false, fixed = false }: NavBarProps) => {
                 <Link href="/">
                   <S.LinksMobile>Social</S.LinksMobile>
                 </Link>
-                {values.logged && values.user.owner && (
+                {user.logged && user.data.owner && (
                   <Link href="/panel">
                     <S.Links>Painel</S.Links>
                   </Link>
@@ -114,7 +104,7 @@ const NavBar = ({ transparency = false, fixed = false }: NavBarProps) => {
           <Link href="/">
             <S.Links>Social</S.Links>
           </Link>
-          {values.logged && values.user.owner && (
+          {user.logged && user.data.owner && (
             <Link href="/panel">
               <S.Links>Painel</S.Links>
             </Link>
@@ -156,26 +146,40 @@ const NavBar = ({ transparency = false, fixed = false }: NavBarProps) => {
                   })
                 }
                 onInputFocus={() => {
-                  const result = document.getElementById('result')
-                  //@ts-ignore
+                  const result = document.getElementById(
+                    'result'
+                  ) as HTMLDivElement
                   result.style.opacity = '1'
-                  //@ts-ignore
                   result.style.transform = 'rotateX(0deg)'
                   //@ts-ignore
                   result.style.transition_timing_function = 'ease-out'
                 }}
                 onInputBlur={() => {
-                  document.onclick = function (e) {
-                    //@ts-ignore
-                    const id = e.target.id
-                    const result =
+                  // @ts-ignore
+                  document.onclick = (
+                    e: React.MouseEventHandler<HTMLElement>
+                  ) => {
+                    try {
                       //@ts-ignore
-                      e.target.attributes.class.nodeValue.includes('result')
-                    if (id !== 'result' && id !== 'search' && !result) {
-                      const result = document.getElementById('result')
-                      //@ts-ignore
+                      const id = e.target.id
+                      const result =
+                        //@ts-ignore
+                        e.target.attributes.class.nodeValue.includes('result')
+                      if (id !== 'result' && id !== 'search' && !result) {
+                        const result = document.getElementById(
+                          'result'
+                        ) as HTMLDivElement
+                        result.style.opacity = '0.25'
+                        result.style.transform = 'rotateX(-90deg)'
+                        //@ts-ignore
+                        result.style.transition_timing_function = 'ease-out'
+                        document.onclick = null
+                      }
+                    } catch {
+                      const result = document.getElementById(
+                        'result'
+                      ) as HTMLDivElement
                       result.style.opacity = '0.25'
-                      //@ts-ignore
                       result.style.transform = 'rotateX(-90deg)'
                       //@ts-ignore
                       result.style.transition_timing_function = 'ease-out'
@@ -195,11 +199,15 @@ const NavBar = ({ transparency = false, fixed = false }: NavBarProps) => {
                 <S.TitleSeparate className="result"></S.TitleSeparate>
                 {loading ? (
                   <S.Loading>
-                    <Logo animate={true} animateType="infinit" size="small" />
+                    <Spin tip="Buscando..." />
                   </S.Loading>
                 ) : searchResult.mangas.length == 0 ? (
                   <S.ResultNotfound className="result">
-                    Nada encontrado
+                    <Empty
+                      className="result"
+                      description="Nada encontrado"
+                      image={Empty.PRESENTED_IMAGE_SIMPLE}
+                    />
                   </S.ResultNotfound>
                 ) : (
                   searchResult.mangas.map((manga, i) => {
@@ -218,11 +226,15 @@ const NavBar = ({ transparency = false, fixed = false }: NavBarProps) => {
                 <S.TitleSeparate className="result"></S.TitleSeparate>
                 {loading ? (
                   <S.Loading>
-                    <Logo animate={true} animateType="infinit" size="small" />
+                    <Spin tip="Buscando..." />
                   </S.Loading>
                 ) : searchResult.users.length == 0 ? (
                   <S.ResultNotfound className="result">
-                    Nada encontrado
+                    <Empty
+                      className="result"
+                      description="Nada encontrado"
+                      image={Empty.PRESENTED_IMAGE_SIMPLE}
+                    />
                   </S.ResultNotfound>
                 ) : (
                   searchResult.users.map((user, i) => {
@@ -249,14 +261,14 @@ const NavBar = ({ transparency = false, fixed = false }: NavBarProps) => {
             </S.Notify>
           </S.WrapperUserItem>
           <S.WrapperUserItem>
-            <S.User logged={values.logged}>
-              {values.logged ? (
+            <S.User logged={user.logged}>
+              {user.logged ? (
                 <>
-                  <img src={r.image + values.user.profile_photo} />
+                  <img src={user.data.profile_photo} />
                   <S.WrapperUserSubMenu>
                     <DropdownItem href="/" icon="icon-account" text="Perfil" />
                     <DropdownItem
-                      href="/"
+                      href={`/user/config`}
                       icon="icon-setting"
                       text="Configurações"
                     />
