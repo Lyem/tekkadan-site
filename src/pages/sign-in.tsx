@@ -4,14 +4,29 @@ import TextField from '../components/TextField'
 import Auth from '../templates/auth'
 import * as S from '../styles/sign-in.style'
 import Link from 'next/link'
-import React, { useState } from 'react'
-import Router from 'next/router'
+import React, { useEffect, useState } from 'react'
+import Router, { useRouter } from 'next/router'
 import Icon from '../components/Icon'
 import { UserService } from '../Services/UserService'
+import { useDispatch, useSelector } from 'react-redux'
+import { login, setUserInfos } from '../store/userSlices'
+import { RootState } from '../store'
 
 const userService = new UserService()
 
 const SingIn = () => {
+  const dispatch = useDispatch()
+
+  const user = useSelector((state: RootState) => state.user)
+
+  const router = useRouter()
+
+  useEffect(() => {
+    if (user.logged) {
+      router.push('/')
+    }
+  }, [router, user.logged])
+
   const [values, setValues] = useState({
     email: '',
     password: ''
@@ -24,8 +39,11 @@ const SingIn = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
     try {
-      userService.Login(values.email, values.password)
-      Router.push('/')
+      userService.Login(values.email, values.password).then((response) => {
+        dispatch(setUserInfos(response.data))
+        dispatch(login())
+        Router.push('/')
+      })
     } catch (err) {
       console.log(err)
     }

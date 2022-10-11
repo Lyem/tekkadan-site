@@ -4,16 +4,29 @@ import Button from '../components/Button'
 import TextField from '../components/TextField'
 import Auth from '../templates/auth'
 import Link from 'next/link'
-import React, { useState } from 'react'
-import axios from 'axios'
-import * as r from '../shared/api.routes'
-import Router from 'next/router'
+import React, { useEffect, useState } from 'react'
+import Router, { useRouter } from 'next/router'
 import Icon from '../components/Icon'
 import { UserService } from '../Services/UserService'
+import { useDispatch, useSelector } from 'react-redux'
+import { login, setUserInfos } from '../store/userSlices'
+import { RootState } from '../store'
 
 const userService = new UserService()
 
 const SingUp = () => {
+  const dispatch = useDispatch()
+
+  const user = useSelector((state: RootState) => state.user)
+
+  const router = useRouter()
+
+  useEffect(() => {
+    if (user.logged) {
+      router.push('/')
+    }
+  }, [router, user.logged])
+
   const [values, setValues] = useState({
     name: '',
     email: '',
@@ -33,8 +46,8 @@ const SingUp = () => {
         values.email,
         values.password
       )
-      console.log(response.data)
-      //localStorage.setItem('user', JSON.stringify(response.data))
+      dispatch(setUserInfos(response.data))
+      dispatch(login())
       Router.push('/')
     } catch (err) {
       console.log(err)
