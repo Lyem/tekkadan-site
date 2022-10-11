@@ -5,8 +5,32 @@ import { ThemeProvider } from 'styled-components'
 import theme from '../styles/theme'
 import '../styles/ant.css'
 import NextNProgress from 'nextjs-progressbar'
+import { Provider } from 'react-redux'
+import { store } from '../store'
+import { useEffect, useState } from 'react'
+import { UserService } from '../Services/UserService'
+import { login, setUserInfos } from '../store/userSlices'
+import Loading from '../components/loading'
+
+const userService = new UserService()
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    userService
+      .Me()
+      .then((response) => {
+        if (response.status == 200) {
+          store.dispatch(setUserInfos(response.data))
+          store.dispatch(login())
+        }
+        setLoading(false)
+      })
+      .catch(() => {
+        setLoading(false)
+      })
+  }, [])
+
   return (
     <ThemeProvider theme={theme}>
       <Head>
@@ -41,7 +65,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         showOnShallow={true}
         options={{ showSpinner: false }}
       />
-      <Component {...pageProps} />
+      <Provider store={store}>
+        {loading ? <Loading /> : <Component {...pageProps} />}
+      </Provider>
     </ThemeProvider>
   )
 }
