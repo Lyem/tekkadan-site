@@ -1,7 +1,12 @@
 import { AxiosResponse } from 'axios'
-import { ChapterList } from '../../Interfaces/ChapterListInterface'
 import { Id } from '../../Interfaces/IdInterface'
+import { List } from '../../Interfaces/ListInterface'
+import { Manga2 } from '../../Interfaces/Manga2Interface'
 import { MangaChapter } from '../../Interfaces/MangaChapterInterface'
+
+export interface chapterList extends MangaChapter {
+  manga_over_views: Manga2
+}
 
 export interface MangaChapterRepositoryInterface {
   uploadCap(
@@ -13,8 +18,9 @@ export interface MangaChapterRepositoryInterface {
     progress?: (progressEvent: any) => void
   ): Promise<AxiosResponse<MangaChapter>>
   getCapById(id: number): Promise<AxiosResponse<MangaChapter>>
-  getMangaCapsById(id: number): Promise<AxiosResponse<ChapterList>>
+  getMangaCapsById(id: number): Promise<AxiosResponse<List<MangaChapter>>>
   getCapsIds(): Promise<AxiosResponse<Array<Id>>>
   getMangaAllCapsById(id: number): Promise<AxiosResponse<MangaChapter[]>>
+  getLastsChapters(): Promise<AxiosResponse<List<chapterList>>>
   delete(id: number): Promise<AxiosResponse>
 }

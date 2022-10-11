@@ -22,6 +22,10 @@ export class MangaChapterService {
       progress
     )
   }
+  async getMangaLastsChapters() {
+    await axios.get(csrfCookie)
+    return await this.mangaChapterRepository.getLastsChapters()
+  }
   async getIds() {
     await axios.get(csrfCookie)
     return await this.mangaChapterRepository.getCapsIds()
