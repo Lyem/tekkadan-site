@@ -3,8 +3,44 @@ import Footer from '../components/Footer'
 import NavBar from '../components/NavBar'
 import Carousel from '../components/Carousel'
 import * as S from '../styles/home.style'
+import { Pagination, Autoplay } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+import 'swiper/css/pagination'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { Slider } from '../Interfaces/SliderInterface'
+import { SliderService } from '../Services/SliderService'
+import { Empty, Spin } from 'antd'
+import Separator from '../components/Separator'
+import { useSelector } from 'react-redux'
+import { RootState } from '../store'
+import { MangaChapterService } from '../Services/MangaChapterService'
+import { chapterList } from '../Repositories/Contracts/MangaChapteRepositoryInterface'
+import Link from 'next/link'
+import moment from 'moment'
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const idLocale = require('moment/locale/pt-br')
+moment.updateLocale('pt-br', idLocale)
 
 const Home = () => {
+  const router = useRouter()
+  const user = useSelector((state: RootState) => state.user)
+  const [carouselIndex, setCarouselIndex] = useState(0)
+  const [sliders, setSliders] = useState([] as Slider[])
+  const [sliderLoading, setSliderLoading] = useState(true)
+  const [lasts, setLasts] = useState([] as Array<chapterList>)
+  useEffect(() => {
+    const sliderService = new SliderService()
+    const mangachapters = new MangaChapterService()
+    sliderService.getAllSlider().then((slider) => {
+      setSliders(slider.data)
+      setSliderLoading(false)
+    })
+    mangachapters.getMangaLastsChapters().then((lasts) => {
+      setLasts(lasts.data.data)
+    })
+  }, [])
   return (
     <>
       <Head>
@@ -13,7 +49,133 @@ const Home = () => {
       </Head>
       <NavBar />
       <S.Wrapper>
-        <Carousel></Carousel>
+        {!sliderLoading ? (
+          <Swiper
+            style={{ marginBottom: '79px' }}
+            modules={[Pagination, Autoplay]}
+            spaceBetween={10}
+            slidesPerView={1}
+            autoplay={{
+              delay: 4500,
+              disableOnInteraction: false
+            }}
+            onClick={() => {
+              router.push(`/manga/${sliders[carouselIndex].manga_over_view_id}`)
+            }}
+            onSlideChange={(swiper) => setCarouselIndex(swiper.activeIndex)}
+            pagination={{ clickable: true }}
+          >
+            {sliders.map((slider, i) => {
+              return (
+                <SwiperSlide key={i}>
+                  <Carousel
+                    title={slider.title_photo}
+                    background={slider.background_photo}
+                  />
+                </SwiperSlide>
+              )
+            })}
+          </Swiper>
+        ) : (
+          <Spin tip="Carregando..." spinning={sliderLoading}>
+            <Carousel />
+          </Spin>
+        )}
+        {user.logged && <Separator title="Continue lendo" />}
+        <Separator title="Melhores da semana" />
+        <Separator title="Lançamentos" />
+        <S.Table>
+          <S.Lasts>
+            {lasts.length == 0 ? (
+              <Empty className="result" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            ) : (
+              lasts.map((last, i) => {
+                if (i <= 5) {
+                  return (
+                    <S.WrapperLast key={i}>
+                      <Link href={`/manga/${last.manga_over_views.id}`}>
+                        <S.LastMangaImage src={last.manga_over_views.photo} />
+                      </Link>
+                      <S.WrapperLastContent>
+                        <Link href={`/manga/${last.manga_over_views.id}`}>
+                          <S.LastTitle>
+                            {last.manga_over_views.name}
+                          </S.LastTitle>
+                        </Link>
+                        <Link href={`/manga/reader/${last.id}`}>
+                          <S.LastCap>Capitulo {last.chapter}</S.LastCap>
+                        </Link>
+                        <S.LastTime>
+                          {moment(last.created_at).fromNow()}
+                        </S.LastTime>
+                      </S.WrapperLastContent>
+                    </S.WrapperLast>
+                  )
+                }
+              })
+            )}
+          </S.Lasts>
+          <S.Lasts id="item2">
+            {lasts.length <= 6 ? (
+              <Empty className="result" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            ) : (
+              lasts.map((last, i) => {
+                if (i > 5 && i <= 11) {
+                  return (
+                    <S.WrapperLast key={i}>
+                      <Link href={`/manga/${last.manga_over_views.id}`}>
+                        <S.LastMangaImage src={last.manga_over_views.photo} />
+                      </Link>
+                      <S.WrapperLastContent>
+                        <Link href={`/manga/${last.manga_over_views.id}`}>
+                          <S.LastTitle>
+                            {last.manga_over_views.name}
+                          </S.LastTitle>
+                        </Link>
+                        <Link href={`/manga/reader/${last.id}`}>
+                          <S.LastCap>Capitulo {last.chapter}</S.LastCap>
+                        </Link>
+                        <S.LastTime>
+                          {moment(last.created_at).fromNow()}
+                        </S.LastTime>
+                      </S.WrapperLastContent>
+                    </S.WrapperLast>
+                  )
+                }
+              })
+            )}
+          </S.Lasts>
+          <S.Lasts id="item3">
+            {lasts.length <= 6 ? (
+              <Empty className="result" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            ) : (
+              lasts.map((last, i) => {
+                if (i > 11 && i <= 17) {
+                  return (
+                    <S.WrapperLast key={i}>
+                      <Link href={`/manga/${last.manga_over_views.id}`}>
+                        <S.LastMangaImage src={last.manga_over_views.photo} />
+                      </Link>
+                      <S.WrapperLastContent>
+                        <Link href={`/manga/${last.manga_over_views.id}`}>
+                          <S.LastTitle>
+                            {last.manga_over_views.name}
+                          </S.LastTitle>
+                        </Link>
+                        <Link href={`/manga/reader/${last.id}`}>
+                          <S.LastCap>Capitulo {last.chapter}</S.LastCap>
+                        </Link>
+                        <S.LastTime>
+                          {moment(last.created_at).fromNow()}
+                        </S.LastTime>
+                      </S.WrapperLastContent>
+                    </S.WrapperLast>
+                  )
+                }
+              })
+            )}
+          </S.Lasts>
+        </S.Table>
       </S.Wrapper>
       <Footer></Footer>
     </>
