@@ -1,19 +1,26 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { AxiosResponse } from 'axios'
-import { ChapterList } from '../Interfaces/ChapterListInterface'
 import { Id } from '../Interfaces/IdInterface'
+import { List } from '../Interfaces/ListInterface'
 import { MangaChapter } from '../Interfaces/MangaChapterInterface'
 import axios from '../lib/axios'
 import {
   mangaChapter,
   mangaChapterIds,
   mangaChapters,
-  mangaChaptersAll
+  mangaChaptersAll,
+  mangaLastsChapters
 } from '../shared/api.routes'
 import { DataURIToBlob } from '../shared/datauritoblob'
-import { MangaChapterRepositoryInterface } from './Contracts/MangaChapteRepositoryInterface'
+import {
+  chapterList,
+  MangaChapterRepositoryInterface
+} from './Contracts/MangaChapteRepositoryInterface'
 
 export class MangaChapterRepository implements MangaChapterRepositoryInterface {
+  getLastsChapters(): Promise<AxiosResponse<List<chapterList>>> {
+    return axios.get(`${mangaLastsChapters}`)
+  }
   getCapsIds(): Promise<AxiosResponse<Id[]>> {
     return axios.get(`${mangaChapterIds}`)
   }
@@ -51,7 +58,7 @@ export class MangaChapterRepository implements MangaChapterRepositoryInterface {
   getCapById(id: number): Promise<AxiosResponse<MangaChapter>> {
     return axios.get(`${mangaChapter}/${id}`)
   }
-  getMangaCapsById(id: number): Promise<AxiosResponse<ChapterList>> {
+  getMangaCapsById(id: number): Promise<AxiosResponse<List<MangaChapter>>> {
     return axios.get(`${mangaChapters}/${id}`)
   }
   delete(id: number): Promise<AxiosResponse> {
