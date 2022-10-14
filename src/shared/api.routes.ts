@@ -3,6 +3,7 @@ export const csrfCookie = '/sanctum/csrf-cookie'
 export const createUser = 'user'
 export const login = 'auth'
 export const getUserByToken = 'user/me'
+export const userUpdate = 'user/update'
 export const image = process.env.NEXT_PUBLIC_apiImage
 export const logOut = 'auth'
 export const manga = 'manga'
