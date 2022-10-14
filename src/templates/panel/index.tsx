@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import NavBar from '../../components/NavBar'
 import * as S from './style'
-import { useRouter } from 'next/router'
+import Router from 'next/router'
 import Footer from '../../components/Footer'
 import Sider from 'antd/lib/layout/Sider'
 import {
@@ -20,7 +20,6 @@ type PanelProps = {
 
 const Panel = ({ openKey = [''], keys = '1', children }: PanelProps) => {
   const [expand, setExpand] = useState(true)
-  const router = useRouter()
 
   type MenuItem = Required<MenuProps>['items'][number]
 
@@ -70,7 +69,8 @@ const Panel = ({ openKey = [''], keys = '1', children }: PanelProps) => {
   ]
 
   const onClick: MenuProps['onClick'] = (e) => {
-    router.push(e.key)
+    const route = e.key
+    Router.push(route)
   }
 
   return (
@@ -85,14 +85,14 @@ const Panel = ({ openKey = [''], keys = '1', children }: PanelProps) => {
           >
             <Menu
               theme="dark"
-              onClick={onClick}
               defaultSelectedKeys={[keys]}
               defaultOpenKeys={openKey}
               mode={`${expand ? 'inline' : 'vertical'}`}
               inlineCollapsed={!expand}
               style={{ height: 'calc(90vh - 62px)' }}
+              onClick={onClick}
               items={items}
-            />
+            ></Menu>
           </Sider>
         </S.NavWrapper>
         <S.WrapperChild>
