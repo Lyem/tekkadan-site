@@ -92,13 +92,6 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
   useEffect(() => {
     if (load) {
       setLoad(false)
-      if (cookies.NAV_OPEN) {
-        setOpen(cookies.NAV_OPEN === 'true')
-
-        if (cookies.NAV_OPEN === 'true') {
-          onClickInput?.fire()
-        }
-      }
       if (cookies.READER_ZOOM) {
         setSize(+cookies.READER_ZOOM)
         setSizeView(+cookies.READER_ZOOM)
@@ -138,7 +131,17 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
                 )
               } else {
                 return (
-                  <Link href={`/manga/reader/${cap.id}#pg-1`} key={i}>
+                  <Link
+                    // onClick={() => {
+                    //   const scroller = document.querySelector('#reader')
+                    //   // @ts-ignore
+                    //   scroller.scrollTop = 0
+                    // }}
+                    href={`/manga/reader/${cap.id}#top`}
+                    scroll={true}
+                    replace
+                    key={i}
+                  >
                     <S.CapDiv disable={false}>
                       <S.Cap>
                         Capitulo {cap.chapter} - {cap.title}
@@ -151,15 +154,11 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
           </S.WrapperCaps>
         </S.SideMenu>
 
-        <S.Reader open={open}>
+        <S.Reader id="reader" open={open}>
           <NavBar className="MnavBar" />
           <S.WrapperMenuButtons open={open}>
             <IconButton
               onClick={() => {
-                setCookie(null, 'NAV_OPEN', `${!open}`, {
-                  maxAge: 86400 * 7,
-                  path: '/manga/reader/'
-                })
                 setOpen(!open)
                 onClickInput?.fire()
               }}
@@ -178,7 +177,11 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
                 <Icon size={25} icon="icon-back-arrow" />
               </IconButton>
             ) : (
-              <Link href={`/manga/reader/${previousCh}#pg-1`}>
+              <Link
+                href={`/manga/reader/${previousCh}#top`}
+                scroll={true}
+                replace
+              >
                 <IconButton>
                   <Icon size={25} icon="icon-back-arrow" />
                 </IconButton>
@@ -189,7 +192,7 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
                 <Icon size={25} icon="icon-forward" />
               </IconButton>
             ) : (
-              <Link href={`/manga/reader/${nextCh}#pg-1`}>
+              <Link href={`/manga/reader/${nextCh}#top`} scroll={true} replace>
                 <IconButton>
                   <Icon size={25} icon="icon-forward" />
                 </IconButton>
@@ -274,7 +277,7 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
               </S.Config>
             </div>
           </S.WrapperMenuButtons>
-          <S.Division>
+          <S.Division id="top">
             <S.Title>
               {chapter.chapter} - {chapter.title}
             </S.Title>
@@ -296,6 +299,10 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
                   src={`${page.page}`}
                   quality={quality}
                   layout="responsive"
+                  // onLoadCapture={(event) => {
+                  //   const target = event.target
+                  //   console.log(target)
+                  // }}
                   // onLoad={(event) => {
                   //   const target = event.target
 
@@ -310,7 +317,11 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
                   Último Capítulo Alcançado
                 </Button>
               ) : (
-                <Link href={`/manga/reader/${nextCh}#pg-1`}>
+                <Link
+                  href={`/manga/reader/${nextCh}#top`}
+                  scroll={true}
+                  replace
+                >
                   <Button fullWidth={true}>Próximo capítulo</Button>
                 </Link>
               )}
