@@ -12,6 +12,7 @@ export class MangaService {
     format: string,
     staffs: [],
     synopsis: string,
+    alternativeName: string,
     background_photo: [],
     photo: []
   ) {
@@ -23,6 +24,7 @@ export class MangaService {
       format,
       staffs,
       synopsis,
+      alternativeName,
       background_photo,
       photo
     )

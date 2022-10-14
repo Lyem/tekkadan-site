@@ -16,6 +16,7 @@ export class MangaRepository implements MangaRepositoryInterface {
     format: string,
     staffs: [],
     synopsis: string,
+    alternativeName: string,
     background_photo: [],
     photo: []
   ): Promise<AxiosResponse<Manga>> {
@@ -25,6 +26,9 @@ export class MangaRepository implements MangaRepositoryInterface {
     formData.append('status', status)
     categories.map((category) => formData.append('categories[]', category))
     staffs.map((staff) => formData.append('staffs[]', staff))
+    if (alternativeName) {
+      formData.append('alternative_name', alternativeName)
+    }
     if (synopsis != '') {
       formData.append('synopsis', synopsis)
     }

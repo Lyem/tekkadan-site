@@ -14,6 +14,7 @@ export interface MangaRepositoryInterface {
     format: string,
     staffs: [],
     synopsis: string,
+    alternativeName: string,
     background_photo: [],
     photo: []
   ): Promise<AxiosResponse<Manga>>
