@@ -50,39 +50,45 @@ const Home = () => {
       <NavBar />
       <S.Wrapper>
         {!sliderLoading ? (
-          <Swiper
-            style={{ marginBottom: '79px' }}
-            modules={[Pagination, Autoplay]}
-            spaceBetween={10}
-            slidesPerView={1}
-            autoplay={{
-              delay: 4500,
-              disableOnInteraction: false
-            }}
-            onClick={() => {
-              router.push(`/manga/${sliders[carouselIndex].manga_over_view_id}`)
-            }}
-            onSlideChange={(swiper) => setCarouselIndex(swiper.activeIndex)}
-            pagination={{ clickable: true }}
-          >
-            {sliders.map((slider, i) => {
-              return (
-                <SwiperSlide key={i}>
-                  <Carousel
-                    title={slider.title_photo}
-                    background={slider.background_photo}
-                  />
-                </SwiperSlide>
-              )
-            })}
-          </Swiper>
+          sliders.length == 0 ? (
+            <></>
+          ) : (
+            <Swiper
+              style={{ marginBottom: '79px' }}
+              modules={[Pagination, Autoplay]}
+              spaceBetween={10}
+              slidesPerView={1}
+              autoplay={{
+                delay: 4500,
+                disableOnInteraction: false
+              }}
+              onClick={() => {
+                router.push(
+                  `/manga/${sliders[carouselIndex].manga_over_view_id}`
+                )
+              }}
+              onSlideChange={(swiper) => setCarouselIndex(swiper.activeIndex)}
+              pagination={{ clickable: true }}
+            >
+              {sliders.map((slider, i) => {
+                return (
+                  <SwiperSlide key={i}>
+                    <Carousel
+                      title={slider.title_photo}
+                      background={slider.background_photo}
+                    />
+                  </SwiperSlide>
+                )
+              })}
+            </Swiper>
+          )
         ) : (
           <Spin tip="Carregando..." spinning={sliderLoading}>
             <Carousel />
           </Spin>
         )}
-        {user.logged && <Separator title="Continue lendo" />}
-        <Separator title="Melhores da semana" />
+        {/* {user.logged && <Separator title="Continue lendo" />}
+        <Separator title="Melhores da semana" /> */}
         <Separator title="Lançamentos" />
         <S.Table>
           <S.Lasts>
@@ -146,7 +152,7 @@ const Home = () => {
             )}
           </S.Lasts>
           <S.Lasts id="item3">
-            {lasts.length <= 6 ? (
+            {lasts.length <= 12 ? (
               <Empty className="result" image={Empty.PRESENTED_IMAGE_SIMPLE} />
             ) : (
               lasts.map((last, i) => {
@@ -177,7 +183,9 @@ const Home = () => {
           </S.Lasts>
         </S.Table>
       </S.Wrapper>
-      <Footer></Footer>
+      <S.WrapperFooter>
+        <Footer />
+      </S.WrapperFooter>
     </>
   )
 }

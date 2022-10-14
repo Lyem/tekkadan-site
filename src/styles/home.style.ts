@@ -97,3 +97,10 @@ export const LastTime = styled.p`
     font-weight: ${theme.font.light};
   `}
 `
+
+export const WrapperFooter = styled.div`
+  position: relative;
+  right: 0;
+  left: 0;
+  bottom: 0;
+`
