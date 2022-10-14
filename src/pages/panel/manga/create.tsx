@@ -11,6 +11,7 @@ import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
 import FilePondPluginFileEncode from 'filepond-plugin-file-encode'
 import 'filepond/dist/filepond.min.css'
 import 'filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css'
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 import * as S from '../../../styles/panel/manga/mangaCreate.style'
 import TextField from '../../../components/TextField'
 import Button from '../../../components/Button'
@@ -49,6 +50,7 @@ const MangaCreate = () => {
     synopsis: '',
     format: '',
     status: '',
+    alternativeName: '',
     staffs: [],
     categories: []
   })
@@ -111,6 +113,7 @@ const MangaCreate = () => {
         values.format,
         values.staffs as [],
         values.synopsis,
+        values.alternativeName,
         background as [],
         photo as []
       )
