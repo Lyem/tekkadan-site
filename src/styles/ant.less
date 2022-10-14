@@ -69,8 +69,8 @@
 @icon-color: @white;
 
 // Border color
-@border-color-base: transparent; // base border outline a component
-@border-color-split: transparent; // split border inside a component
+@border-color-base: @white; // base border outline a component
+//@border-color-split: transparent; // split border inside a component
 
 @background-color-light: @contrast; // background of header and selected item
 @background-color-base: @black; // Default grey background color
@@ -78,6 +78,18 @@
 // Button
 @button-color: #757575;
 @btn-shadow: @black;
+
+.ant-upload-list-item {
+  background-color: @contrast2;
+}
+
+.ant-upload-list-picture .ant-upload-list-item, .ant-upload-list-picture-card .ant-upload-list-item {
+  border: none;
+}
+
+.ant-upload-list-picture .ant-upload-list-item:hover, .ant-upload-list-picture .ant-upload-list-item:hover .ant-upload-list-item-info, .ant-upload-list-picture-card .ant-upload-list-item:hover, .ant-upload-list-picture-card .ant-upload-list-item:hover .ant-upload-list-item-info {
+  background-color: @contrast2;
+}
 
 .ant-menu-item-selected {
   background-color: @contrast2 !important;
