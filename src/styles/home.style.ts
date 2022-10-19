@@ -3,6 +3,7 @@ import media from 'styled-media-query'
 
 export const Wrapper = styled.main`
   margin-top: 30px;
+  min-height: calc(100vh - 465px);
   ${({ theme }) => css`
     padding-left: ${theme.spacings.xxxlarge};
     padding-right: ${theme.spacings.xxxlarge};
