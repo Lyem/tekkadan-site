@@ -18,6 +18,7 @@ import { useRouter } from 'next/router'
 import Toast from '../../components/Toast'
 import { ToastI } from '../../Interfaces/ToastInterface'
 import { setUserInfos } from '../../store/userSlices'
+import { image } from '../../shared/api.routes'
 
 function UserConfig() {
   const [photoList, setPhotoList] = useState<UploadFile[]>([])
@@ -69,7 +70,7 @@ function UserConfig() {
         uid: '-1',
         name: 'perfil',
         status: 'done',
-        url: `${user.data.profile_photo}`
+        url: `${image + user.data.profile_photo}`
       }
     ])
     setBackgroundList([
@@ -77,7 +78,7 @@ function UserConfig() {
         uid: '-1',
         name: 'fundo',
         status: 'done',
-        url: `${user.data.background_photo}`
+        url: `${image + user.data.background_photo}`
       }
     ])
     const name = user.data.name.split('#')
