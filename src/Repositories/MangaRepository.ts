@@ -9,6 +9,12 @@ import { Id } from '../Interfaces/IdInterface'
 import { DataURIToBlob } from '../shared/datauritoblob'
 
 export class MangaRepository implements MangaRepositoryInterface {
+  plusViews(id: number): Promise<AxiosResponse> {
+    return axios.get(`${manga}/view/${id}`)
+  }
+  deleteManga(id: number): Promise<AxiosResponse> {
+    return axios.delete(`${manga}/${id}`)
+  }
   createManga(
     name: string,
     categories: [],
@@ -57,8 +63,8 @@ export class MangaRepository implements MangaRepositoryInterface {
   getAllMangaIds(): Promise<AxiosResponse<Id[]>> {
     return axios.get(mangaIds)
   }
-  getAllManga(): Promise<AxiosResponse<MangaList>> {
-    return axios.get(manga)
+  getAllManga(page = 1): Promise<AxiosResponse<MangaList>> {
+    return axios.get(`manga?page=${page}`)
   }
   getMangabyId(id: number): Promise<AxiosResponse<Manga>> {
     return axios.get(manga + `/${id}`).then()

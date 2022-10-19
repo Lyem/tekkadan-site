@@ -30,9 +30,14 @@ export class MangaService {
     )
   }
 
-  async getAll() {
+  async plusView(id: number) {
     await axios.get(csrfCookie)
-    return await this.mangaRepository.getAllManga()
+    await this.mangaRepository.plusViews(id)
+  }
+
+  async getAll(page?: number) {
+    await axios.get(csrfCookie)
+    return await this.mangaRepository.getAllManga(page)
   }
 
   async getAllMangaIds() {
@@ -43,5 +48,10 @@ export class MangaService {
   async getMangabyId(id: number) {
     await axios.get(csrfCookie)
     return await this.mangaRepository.getMangabyId(id)
+  }
+
+  async deleteMangabyId(id: number) {
+    await axios.get(csrfCookie)
+    return await this.mangaRepository.deleteManga(id)
   }
 }

@@ -5,8 +5,9 @@ import { MangaList } from '../../Interfaces/MangaListInterface'
 
 export interface MangaRepositoryInterface {
   getMangabyId(id: number): Promise<AxiosResponse<Manga>>
-  getAllManga(): Promise<AxiosResponse<MangaList>>
+  getAllManga(page?: number): Promise<AxiosResponse<MangaList>>
   getAllMangaIds(): Promise<AxiosResponse<Id[]>>
+  plusViews(id: number): Promise<AxiosResponse>
   createManga(
     name: string,
     categories: [],
@@ -18,4 +19,5 @@ export interface MangaRepositoryInterface {
     background_photo: [],
     photo: []
   ): Promise<AxiosResponse<Manga>>
+  deleteManga(id: number): Promise<AxiosResponse>
 }
