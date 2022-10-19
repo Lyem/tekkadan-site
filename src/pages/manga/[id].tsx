@@ -4,13 +4,14 @@ import Image from 'next/image'
 import Icon from '../../components/Icon'
 import Head from 'next/head'
 import { MangaService } from '../../Services/MangaService'
-//import { useEffect } from 'react'
 import { Manga } from '../../Interfaces/MangaInterface'
 import { MangaChapterService } from '../../Services/MangaChapterService'
 import Link from 'next/link'
 import { MangaChapter } from '../../Interfaces/MangaChapterInterface'
 import Tag from '../../components/Tag'
 import moment from 'moment'
+import { image } from '../../shared/api.routes'
+import { useEffect } from 'react'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const idLocale = require('moment/locale/pt-br')
 moment.updateLocale('pt-br', idLocale)
@@ -21,9 +22,10 @@ export type MangaOverViewProps = {
 }
 
 const MangaOverView = ({ manga, chapter }: MangaOverViewProps) => {
-  // useEffect(() => {
-  //   console.log(manga)
-  // }, [manga])
+  useEffect(() => {
+    const mangaService = new MangaService()
+    mangaService.plusView(manga.id)
+  }, [manga])
 
   return (
     <>
@@ -38,7 +40,11 @@ const MangaOverView = ({ manga, chapter }: MangaOverViewProps) => {
       >
         <S.Wrapper>
           <S.Cover>
-            <Image src={manga.photo} width="512px" height="720px"></Image>
+            <Image
+              src={image + manga.photo}
+              width="512px"
+              height="720px"
+            ></Image>
           </S.Cover>
           <S.WrapperTitle>
             <S.Title>{manga.name}</S.Title>

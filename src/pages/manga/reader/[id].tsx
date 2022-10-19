@@ -17,6 +17,7 @@ import Link from 'next/link'
 import { useRive, useStateMachineInput } from '@rive-app/react-canvas'
 import Button from '../../../components/Button'
 import { Slider } from 'antd'
+import { image } from '../../../shared/api.routes'
 
 export type CapsProps = {
   chapter: MangaChapter
@@ -28,7 +29,9 @@ function useCap(id: number) {
 
   useEffect(() => {
     const chapterService = new MangaChapterService()
-    chapterService.getMangaAllCapsById(id).then((c) => setCaps(c.data))
+    chapterService
+      .getMangaAllCapsById(id)
+      .then((c) => setCaps(c.data.reverse()))
   }, [id])
 
   return caps
@@ -113,9 +116,9 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
       <NavBar className="navBar" />
       <S.Wrapper>
         <S.SideMenu open={open}>
-          <S.cover url={manga.background_photo}>
+          <S.cover url={image + manga.background_photo}>
             <S.infos>
-              <Image width={100} height={140} src={manga.photo} />
+              <Image width={100} height={140} src={image + manga.photo} />
               <S.infosTitle>{manga.name}</S.infosTitle>
             </S.infos>
           </S.cover>
@@ -296,7 +299,7 @@ const MangaReader = ({ chapter, manga }: CapsProps) => {
                   }`}
                   height={page.height}
                   width={page.width}
-                  src={`${page.page}`}
+                  src={`${image + page.page}`}
                   quality={quality}
                   layout="responsive"
                   // onLoadCapture={(event) => {
@@ -342,7 +345,7 @@ export const getStaticPaths = async () => {
   }))
   return {
     paths: paths,
-    fallback: false
+    fallback: true
   }
 }
 

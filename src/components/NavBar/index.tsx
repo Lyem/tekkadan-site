@@ -16,6 +16,7 @@ import { Empty, Spin } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../store'
 import { logout } from '../../store/userSlices'
+import { image } from '../../shared/api.routes'
 
 export type NavBarProps = {
   transparency?: boolean
@@ -264,7 +265,7 @@ const NavBar = ({
             <S.User logged={user.logged}>
               {user.logged ? (
                 <>
-                  <img src={user.data.profile_photo} />
+                  <img src={image + user.data.profile_photo} />
                   <S.WrapperUserSubMenu>
                     <DropdownItem href="/" icon="icon-account" text="Perfil" />
                     <DropdownItem

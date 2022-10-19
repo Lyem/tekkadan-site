@@ -13,19 +13,20 @@ import { Slider } from '../Interfaces/SliderInterface'
 import { SliderService } from '../Services/SliderService'
 import { Empty, Spin } from 'antd'
 import Separator from '../components/Separator'
-import { useSelector } from 'react-redux'
-import { RootState } from '../store'
+//import { useSelector } from 'react-redux'
+//import { RootState } from '../store'
 import { MangaChapterService } from '../Services/MangaChapterService'
 import { chapterList } from '../Repositories/Contracts/MangaChapteRepositoryInterface'
 import Link from 'next/link'
 import moment from 'moment'
+import { image } from '../shared/api.routes'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const idLocale = require('moment/locale/pt-br')
 moment.updateLocale('pt-br', idLocale)
 
 const Home = () => {
   const router = useRouter()
-  const user = useSelector((state: RootState) => state.user)
+  //const user = useSelector((state: RootState) => state.user)
   const [carouselIndex, setCarouselIndex] = useState(0)
   const [sliders, setSliders] = useState([] as Slider[])
   const [sliderLoading, setSliderLoading] = useState(true)
@@ -84,7 +85,7 @@ const Home = () => {
           )
         ) : (
           <Spin tip="Carregando..." spinning={sliderLoading}>
-            <Carousel />
+            <div style={{ height: '30vw', width: '30%' }} />
           </Spin>
         )}
         {/* {user.logged && <Separator title="Continue lendo" />}
@@ -100,7 +101,9 @@ const Home = () => {
                   return (
                     <S.WrapperLast key={i}>
                       <Link href={`/manga/${last.manga_over_views.id}`}>
-                        <S.LastMangaImage src={last.manga_over_views.photo} />
+                        <S.LastMangaImage
+                          src={image + last.manga_over_views.photo}
+                        />
                       </Link>
                       <S.WrapperLastContent>
                         <Link href={`/manga/${last.manga_over_views.id}`}>
@@ -130,7 +133,9 @@ const Home = () => {
                   return (
                     <S.WrapperLast key={i}>
                       <Link href={`/manga/${last.manga_over_views.id}`}>
-                        <S.LastMangaImage src={last.manga_over_views.photo} />
+                        <S.LastMangaImage
+                          src={image + last.manga_over_views.photo}
+                        />
                       </Link>
                       <S.WrapperLastContent>
                         <Link href={`/manga/${last.manga_over_views.id}`}>
@@ -160,7 +165,9 @@ const Home = () => {
                   return (
                     <S.WrapperLast key={i}>
                       <Link href={`/manga/${last.manga_over_views.id}`}>
-                        <S.LastMangaImage src={last.manga_over_views.photo} />
+                        <S.LastMangaImage
+                          src={image + last.manga_over_views.photo}
+                        />
                       </Link>
                       <S.WrapperLastContent>
                         <Link href={`/manga/${last.manga_over_views.id}`}>

@@ -1,5 +1,6 @@
 import Footer from '../../components/Footer'
 import NavBar from '../../components/NavBar'
+import { image } from '../../shared/api.routes'
 import * as S from './style'
 
 export type OverViewProps = {
@@ -18,7 +19,7 @@ const OverView = ({
   return (
     <S.wrapper>
       <NavBar transparency={transparency} fixed={fixed} />
-      <S.BackgroundImage background={background}></S.BackgroundImage>
+      <S.BackgroundImage background={image + background}></S.BackgroundImage>
       <S.ContentWrapper fixed={fixed}>{children}</S.ContentWrapper>
       <Footer></Footer>
     </S.wrapper>

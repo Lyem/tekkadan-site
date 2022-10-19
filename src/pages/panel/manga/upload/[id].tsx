@@ -21,6 +21,9 @@ import NotFound from '../../../../components/404'
 import Toast from '../../../../components/Toast'
 import { ToastI } from '../../../../Interfaces/ToastInterface'
 import { Modal, Progress } from 'antd'
+import { image } from '../../../../shared/api.routes'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../../../store'
 
 registerPlugin(
   FilePondPluginImagePreview,
@@ -32,6 +35,7 @@ registerPlugin(
 const MangaUpload = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const mangaChapterService = new MangaChapterService()
+  const user = useSelector((state: RootState) => state.user)
   const router = useRouter()
   const { id } = router.query
   const [loading, setLoading] = useState(true)
@@ -101,6 +105,7 @@ const MangaUpload = () => {
             descrition: 'Upload concluido com sucesso',
             backgroundColor: '#0c3617'
           })
+          fetch(`/api/manga?secret=${user.data.front_token}&id=${id}`)
           setFiles([])
           handleInput('title', '')
           handleInput('number', `${+values.number + 1}`)
@@ -189,21 +194,21 @@ const MangaUpload = () => {
   }, [getManga, id, loading, mangaChapterService])
   if (loading) {
     return (
-      <Panel openKey={['sub1']} keys="/panel/manga/upload">
+      <Panel>
         <PanelLoading />
       </Panel>
     )
   } else {
     if (notFound) {
       return (
-        <Panel openKey={['sub1']} keys="/panel/manga/upload">
+        <Panel>
           <Toast toastlist={list} setlist={setList}></Toast>
           <NotFound />
         </Panel>
       )
     }
     return (
-      <Panel openKey={['sub1']} keys="/panel/manga/upload">
+      <Panel>
         <>
           <Head>
             <title>Tekkadan | Upload {manga.name}</title>
@@ -223,7 +228,11 @@ const MangaUpload = () => {
             </Modal>
             <S.Manga>
               <S.Image>
-                <Image width="110px" height="150px" src={manga.photo}></Image>
+                <Image
+                  width="110px"
+                  height="150px"
+                  src={image + manga.photo}
+                ></Image>
               </S.Image>
               <S.Title>{manga.name}</S.Title>
             </S.Manga>

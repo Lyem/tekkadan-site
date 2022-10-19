@@ -1,3 +1,4 @@
+import { image } from '../../shared/api.routes'
 import * as S from './style'
 
 type CarouselProps = {
@@ -7,8 +8,8 @@ type CarouselProps = {
 
 const Carousel = ({ background = '', title = '' }: CarouselProps) => {
   return (
-    <S.Wrapper background={background}>
-      <S.Title src={title} />
+    <S.Wrapper background={image + background}>
+      <S.Title src={image + title} />
     </S.Wrapper>
   )
 }
