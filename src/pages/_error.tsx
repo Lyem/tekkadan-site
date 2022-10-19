@@ -12,7 +12,7 @@ function Error({ statusCode }: ErrorProps) {
       <NavBar />
       <Wrapper>
         <p>{statusCode}</p>
-        <p>Algo deu muito errado, tente re carregar a pagina</p>
+        <p>Algo deu muito errado, tente recarregar a pagina</p>
         <Img src="/tsuki-error.gif" />
       </Wrapper>
       <FooterWrapper>
@@ -25,7 +25,7 @@ function Error({ statusCode }: ErrorProps) {
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 60vh;
+  min-height: calc(100vh - 425px);
   flex-direction: row;
   align-items: center;
   align-content: center;
