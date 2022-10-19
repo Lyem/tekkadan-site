@@ -1,14 +1,13 @@
 /* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/no-var-requires */
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const withLess = require('next-with-less')
 /** @type {import('next').NextConfig} */
-module.exports = {
+module.exports = withLess({
   reactStrictMode: true,
-  swcMinify: true,
   images: {
-    domains: ['tekkadan.test'],
-    formats: ['image/avif', 'image/webp']
+    domains: ['tekkadan.test']
   },
   compiler: {
     styledComponents: true
   }
-}
+})
