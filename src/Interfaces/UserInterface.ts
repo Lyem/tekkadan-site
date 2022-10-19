@@ -10,4 +10,5 @@ export interface UserInterface {
   owner: boolean
   created_at: Date
   updated_at: Date
+  front_token?: string
 }
