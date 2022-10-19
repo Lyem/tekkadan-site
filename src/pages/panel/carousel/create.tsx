@@ -105,7 +105,7 @@ const CreateCarousel = () => {
   }
 
   return (
-    <Panel openKey={['sub3', 'sub8']} keys="/panel/carousel/create">
+    <Panel>
       <Toast toastlist={list} setlist={setList}></Toast>
       <S.Wrapper>
         <S.WrapperContent>

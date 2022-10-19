@@ -175,14 +175,14 @@ const MangaCreate = () => {
 
   if (loading) {
     return (
-      <Panel openKey={['sub1']} keys="/panel/manga/create">
+      <Panel>
         <PanelLoading />
       </Panel>
     )
   }
 
   return (
-    <Panel openKey={['sub1']} keys="/panel/manga/create">
+    <Panel>
       <>
         <Head>
           <title>Tekkadan | Criar Mangá</title>
@@ -260,6 +260,13 @@ const MangaCreate = () => {
                 backgroundColor="contrast2"
                 onInputChange={(v) => handleInput('name', v)}
                 required
+              />
+              <S.Title>Nomes alternativos:</S.Title>
+              <TextField
+                name="alternative"
+                placeholder="Ex: Pirata que estica, pirata borracha"
+                backgroundColor="contrast2"
+                onInputChange={(v) => handleInput('alternativeName', v)}
               />
               <S.Title>Sinopse:</S.Title>
               <TextArea

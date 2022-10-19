@@ -40,7 +40,7 @@ const StatusCreate = () => {
   }
 
   return (
-    <Panel openKey={['sub3', 'sub7']} keys="/panel/status/create">
+    <Panel>
       <Toast toastlist={list} setlist={setList}></Toast>
       <S.Wrapper>
         <form onSubmit={handleSubmit}>

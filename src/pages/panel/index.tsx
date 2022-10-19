@@ -3,7 +3,7 @@ import Panel from '../../templates/panel'
 
 const PanelIndex = () => {
   return (
-    <Panel keys="/panel">
+    <Panel>
       <>
         <Head>
           <title>Tekkadan | Dashboard</title>

@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import NavBar from '../../components/NavBar'
 import * as S from './style'
-import Router from 'next/router'
 import Footer from '../../components/Footer'
-import Sider from 'antd/lib/layout/Sider'
 import {
   MessageOutlined,
   PieChartOutlined,
@@ -11,14 +9,14 @@ import {
   TeamOutlined
 } from '@ant-design/icons'
 import { Menu, MenuProps } from 'antd'
+import Sider from 'antd/lib/layout/Sider'
+import Router from 'next/router'
 
 type PanelProps = {
-  keys?: string
-  openKey?: string[]
   children: React.ReactNode
 }
 
-const Panel = ({ openKey = [''], keys = '1', children }: PanelProps) => {
+const Panel = ({ children }: PanelProps) => {
   const [expand, setExpand] = useState(true)
 
   type MenuItem = Required<MenuProps>['items'][number]
@@ -45,21 +43,22 @@ const Panel = ({ openKey = [''], keys = '1', children }: PanelProps) => {
       getItem('Upload', '/panel/manga/upload'),
       getItem('Criar Manga', '/panel/manga/create')
     ]),
-    getItem('Novel', 'sub2', <ReadOutlined />, [
-      getItem('Novels', '6'),
-      getItem('Team 2', '8')
-    ]),
+    getItem('Novel', 'sub2', <ReadOutlined />, []),
     getItem('Outros', 'sub3', <MessageOutlined />, [
       getItem('Pessoa', 'sub4', null, [
+        getItem('Pessoas', '/panel/people'),
         getItem('Criar Pessoa', '/panel/people/create')
       ]),
       getItem('Categoria', 'sub5', null, [
+        getItem('Categorias', '/panel/category'),
         getItem('Criar Categoria', '/panel/category/create')
       ]),
       getItem('Formato', 'sub6', null, [
+        getItem('Formatos', '/panel/format'),
         getItem('Criar Formato', '/panel/format/create')
       ]),
       getItem('Status', 'sub7', null, [
+        getItem('Status', '/panel/status'),
         getItem('Criar Status', '/panel/status/create')
       ]),
       getItem('Banner', 'sub8', null, [
@@ -69,8 +68,7 @@ const Panel = ({ openKey = [''], keys = '1', children }: PanelProps) => {
   ]
 
   const onClick: MenuProps['onClick'] = (e) => {
-    const route = e.key
-    Router.push(route)
+    Router.push(e.key)
   }
 
   return (
@@ -85,8 +83,6 @@ const Panel = ({ openKey = [''], keys = '1', children }: PanelProps) => {
           >
             <Menu
               theme="dark"
-              defaultSelectedKeys={[keys]}
-              defaultOpenKeys={openKey}
               mode={`${expand ? 'inline' : 'vertical'}`}
               inlineCollapsed={!expand}
               style={{ height: 'calc(90vh - 62px)' }}

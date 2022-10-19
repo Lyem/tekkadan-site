@@ -40,7 +40,7 @@ const CategoryCreate = () => {
   }
 
   return (
-    <Panel openKey={['sub3', 'sub5']} keys="/panel/category/create">
+    <Panel>
       <Toast toastlist={list} setlist={setList}></Toast>
       <S.Wrapper>
         <form onSubmit={handleSubmit}>
