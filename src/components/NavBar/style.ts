@@ -11,6 +11,10 @@ export type NavBarProps = {
   fixed?: boolean
 }
 
+type SearchMobile = {
+  open: boolean
+}
+
 export const WrapperClass = styled.header<NavBarProps>`
   .noScroll {
     ${({ theme, transparency }) => css`
@@ -94,7 +98,7 @@ export const WrapperLinksMobile = styled.div`
   position: fixed;
   height: 100vh;
   top: 0;
-  z-index: 1;
+  z-index: 1000;
   width: 70%;
   transform: translateX(-100%);
   transform-origin: left center;
@@ -200,7 +204,27 @@ export const WrapperSearch = styled.div`
 
 export const WrapperSearchNav = styled.div``
 
-export const ExitSearchButton = styled.div``
+export const WrapperSearchMobile = styled.div<SearchMobile>`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+  transform-origin: center;
+  transition: all 50ms 50ms ease-in;
+  ${({ theme, open }) => css`
+    background-color: ${theme.colors.contrast2};
+    ${open ? 'transform: scale(1, 1);' : 'transform: scale(0, 0);'}
+  `}
+`
+
+export const WrapperSearchInput = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 0.1fr;
+  column-gap: 1.5rem;
+  padding-top: 0.5rem;
+`
 
 export const SearchResult = styled.div`
   text-align: center;

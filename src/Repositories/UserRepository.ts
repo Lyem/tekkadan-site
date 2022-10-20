@@ -2,7 +2,7 @@
 import { UserInterface } from '../Interfaces/UserInterface'
 import { UserRepositoryInterface } from './Contracts/UserRepositoryInterface'
 import axios from '../lib/axios'
-import { createUser, login, me, userUpdate } from '../shared/api.routes'
+import { createUser, login, logout, me, userUpdate } from '../shared/api.routes'
 import { AxiosResponse } from 'axios'
 import { DataURIToBlob } from '../shared/datauritoblob'
 
@@ -50,7 +50,7 @@ export class UserRepository implements UserRepositoryInterface {
     return axios.get(me)
   }
   Logout(): Promise<AxiosResponse> {
-    return axios.delete(login + '/12')
+    return axios.delete(logout)
   }
   Login(
     email: string,

@@ -15,6 +15,11 @@ export class UserService {
     return await this.userRepository.Login(email, password)
   }
 
+  async Logout() {
+    await axios.get(csrfCookie)
+    return await this.userRepository.Logout()
+  }
+
   async Update(
     name?: string,
     tag?: string,

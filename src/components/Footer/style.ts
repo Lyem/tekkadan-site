@@ -20,7 +20,7 @@ export const SocialWrapper = styled.ul`
   position: relative;
   display: flex;
   justify-content: center;
-  z-index: 1000;
+  z-index: 20;
   align-items: center;
   margin: 10px 0;
 `
@@ -72,7 +72,7 @@ export const Wave = styled.div`
   height: 100px;
   background: url('/waves/Wave.svg');
   background-size: 1000px 101px;
-  z-index: 1000;
+  z-index: 10;
   opacity: 1;
   bottom: 0;
   animation: wave 15s linear infinite;
@@ -95,7 +95,7 @@ export const Wave2 = styled.div`
   height: 100px;
   background: url('/waves/Wave2.svg');
   background-size: 1000px 101px;
-  z-index: 999;
+  z-index: 5;
   opacity: 0.7;
   bottom: 0;
   animation: wave2 7s ease infinite;
@@ -118,7 +118,7 @@ export const Wave3 = styled.div`
   height: 100px;
   background: url('/waves/Wave3.svg');
   background-size: 1000px 101px;
-  z-index: 777;
+  z-index: 1;
   opacity: 1;
   bottom: 0;
   animation: wave3 10s linear infinite;

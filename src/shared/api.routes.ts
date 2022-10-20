@@ -2,6 +2,7 @@ export const base = process.env.NEXT_PUBLIC_apiBase
 export const csrfCookie = '/sanctum/csrf-cookie'
 export const createUser = 'user'
 export const login = 'auth'
+export const logout = 'auth/current'
 export const getUserByToken = 'user/me'
 export const userUpdate = 'user/update'
 export const image = process.env.NEXT_PUBLIC_apiImage

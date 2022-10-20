@@ -12,11 +12,13 @@ import { SearchService } from '../../Services/SearchService'
 import { Search } from '../../Interfaces/SearchInterface'
 import MangaList from '../MangaList'
 import UserList from '../UserList'
-import { Empty, Spin } from 'antd'
+import { Button, Empty, Spin } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../store'
 import { logout } from '../../store/userSlices'
 import { image } from '../../shared/api.routes'
+import { UserService } from '../../Services/UserService'
+import { CloseOutlined } from '@ant-design/icons'
 
 export type NavBarProps = {
   transparency?: boolean
@@ -42,10 +44,16 @@ const NavBar = ({
     users: []
   } as Search)
 
+  const userService = new UserService()
+
+  const [mobileSearch, setMobileSearch] = useState(false)
+
   const handleClick = async () => {
     try {
-      dispatch(logout())
-      Router.push('/')
+      userService.Logout().then(() => {
+        dispatch(logout())
+        Router.push('/')
+      })
     } catch (err) {
       console.log(err)
     }
@@ -113,19 +121,8 @@ const NavBar = ({
         </S.WrapperLinks>
         <S.WrapperUser>
           <S.WrapperUserItem>
-            <S.SearchButton>
+            <S.SearchButton onClick={() => setMobileSearch(true)}>
               <Icon color="white" icon="icon-magnifier" size={23} />
-              <S.WrapperSearch>
-                <S.WrapperSearchNav>
-                  <TextField
-                    placeholder="Pesquise no site"
-                    backgroundColor="black"
-                    iconPosition="right"
-                    fontSize="xxsmall"
-                    icon={<Icon icon="icon-magnifier" />}
-                  />
-                </S.WrapperSearchNav>
-              </S.WrapperSearch>
             </S.SearchButton>
             <S.SearchTextFild>
               <TextField
@@ -303,6 +300,84 @@ const NavBar = ({
           </S.WrapperUserItem>
         </S.WrapperUser>
       </S.Wrapper>
+      <S.WrapperSearchMobile open={mobileSearch}>
+        <S.WrapperSearchInput>
+          <TextField
+            placeholder="Pesquise no site"
+            onInputChange={(v) =>
+              debounce(async () => {
+                if (v != '') {
+                  setLoading(true)
+                  const search = await searchService.MangaAndUserSearch(v)
+                  setsearchResult(search.data)
+                  setLoading(false)
+                } else {
+                  setsearchResult({
+                    mangas: [],
+                    users: []
+                  })
+                }
+              })
+            }
+            backgroundColor="black"
+            iconPosition="right"
+            fontSize="xxsmall"
+            icon={<Icon icon="icon-magnifier" />}
+          />
+          <Button
+            onClick={() => setMobileSearch(false)}
+            type="primary"
+            icon={<CloseOutlined />}
+            size="middle"
+          />
+        </S.WrapperSearchInput>
+        <S.TitleResult className="result">Mangas Encontrados:</S.TitleResult>
+        <S.TitleSeparate className="result"></S.TitleSeparate>
+        {loading ? (
+          <S.Loading>
+            <Spin tip="Buscando..." />
+          </S.Loading>
+        ) : searchResult.mangas.length == 0 ? (
+          <S.ResultNotfound className="result">
+            <Empty
+              className="result"
+              description="Nada encontrado"
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+            />
+          </S.ResultNotfound>
+        ) : (
+          searchResult.mangas.map((manga, i) => {
+            return (
+              <Link key={i} href={`/manga/${manga.id}`}>
+                <a>
+                  <MangaList image={manga.photo} title={manga.name} />
+                </a>
+              </Link>
+            )
+          })
+        )}
+        <S.TitleResult className="result">Usuários Encontrados:</S.TitleResult>
+        <S.TitleSeparate className="result"></S.TitleSeparate>
+        {loading ? (
+          <S.Loading>
+            <Spin tip="Buscando..." />
+          </S.Loading>
+        ) : searchResult.users.length == 0 ? (
+          <S.ResultNotfound className="result">
+            <Empty
+              className="result"
+              description="Nada encontrado"
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+            />
+          </S.ResultNotfound>
+        ) : (
+          searchResult.users.map((user, i) => {
+            return (
+              <UserList key={i} name={user.name} photo={user.profile_photo} />
+            )
+          })
+        )}
+      </S.WrapperSearchMobile>
     </S.WrapperClass>
   )
 }
