@@ -68,6 +68,9 @@ const Chapter = () => {
                           fetch(
                             `/api/manga/reader?secret=${user.data.front_token}&id=${record.id}`
                           )
+                          fetch(
+                            `/api/manga?secret=${user.data.front_token}&id=${id}`
+                          )
                           getChapters()
                           resolve(null)
                         })
