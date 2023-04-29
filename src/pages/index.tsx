@@ -8,40 +8,35 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import { Slider } from '../Interfaces/SliderInterface'
+import { useState } from 'react'
 import { SliderService } from '../Services/SliderService'
 import { Empty, Spin } from 'antd'
 import Separator from '../components/Separator'
 //import { useSelector } from 'react-redux'
 //import { RootState } from '../store'
 import { MangaChapterService } from '../Services/MangaChapterService'
-import { chapterList } from '../Repositories/Contracts/MangaChapteRepositoryInterface'
 import Link from 'next/link'
 import moment from 'moment'
 import { image } from '../shared/api.routes'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const idLocale = require('moment/locale/pt-br')
 moment.updateLocale('pt-br', idLocale)
+import useSWR from 'swr'
 
 const Home = () => {
   const router = useRouter()
   //const user = useSelector((state: RootState) => state.user)
   const [carouselIndex, setCarouselIndex] = useState(0)
-  const [sliders, setSliders] = useState([] as Slider[])
-  const [sliderLoading, setSliderLoading] = useState(true)
-  const [lasts, setLasts] = useState([] as Array<chapterList>)
-  useEffect(() => {
-    const sliderService = new SliderService()
-    const mangachapters = new MangaChapterService()
-    sliderService.getAllSlider().then((slider) => {
-      setSliders(slider.data)
-      setSliderLoading(false)
-    })
-    mangachapters.getMangaLastsChapters().then((lasts) => {
-      setLasts(lasts.data.data)
-    })
-  }, [])
+  //const [lasts, setLasts] = useState([] as Array<chapterList>)
+  const sliderService = new SliderService()
+  const mangachapters = new MangaChapterService()
+  const slider = useSWR('/slider', async () =>
+    sliderService.getAllSlider().then((slider) => slider.data)
+  )
+  const lasts = useSWR('/lasts', async () =>
+    mangachapters.getMangaLastsChapters().then((lasts) => lasts.data.data)
+  )
+
   return (
     <>
       <Head>
@@ -50,8 +45,8 @@ const Home = () => {
       </Head>
       <NavBar />
       <S.Wrapper>
-        {!sliderLoading ? (
-          sliders.length == 0 ? (
+        {slider.data ? (
+          slider.data.length == 0 ? (
             <></>
           ) : (
             <Swiper
@@ -65,13 +60,13 @@ const Home = () => {
               }}
               onClick={() => {
                 router.push(
-                  `/manga/${sliders[carouselIndex].manga_over_view_id}`
+                  `/manga/${slider.data[carouselIndex].manga_over_view_id}`
                 )
               }}
               onSlideChange={(swiper) => setCarouselIndex(swiper.activeIndex)}
               pagination={{ clickable: true }}
             >
-              {sliders.map((slider, i) => {
+              {slider.data.map((slider, i) => {
                 return (
                   <SwiperSlide key={i}>
                     <Carousel
@@ -84,7 +79,7 @@ const Home = () => {
             </Swiper>
           )
         ) : (
-          <Spin tip="Carregando..." spinning={sliderLoading}>
+          <Spin tip="Carregando..." spinning={slider.data == undefined}>
             <div style={{ height: '30vw', width: '30%' }} />
           </Spin>
         )}
@@ -93,10 +88,10 @@ const Home = () => {
         <Separator title="Lançamentos" />
         <S.Table>
           <S.Lasts>
-            {lasts.length == 0 ? (
+            {!lasts.data || lasts.data.length == 0 ? (
               <Empty className="result" image={Empty.PRESENTED_IMAGE_SIMPLE} />
             ) : (
-              lasts.map((last, i) => {
+              lasts.data.map((last, i) => {
                 if (i <= 5) {
                   return (
                     <S.WrapperLast key={i}>
@@ -125,10 +120,10 @@ const Home = () => {
             )}
           </S.Lasts>
           <S.Lasts id="item2">
-            {lasts.length <= 6 ? (
+            {!lasts.data || lasts.data.length <= 6 ? (
               <Empty className="result" image={Empty.PRESENTED_IMAGE_SIMPLE} />
             ) : (
-              lasts.map((last, i) => {
+              lasts.data.map((last, i) => {
                 if (i > 5 && i <= 11) {
                   return (
                     <S.WrapperLast key={i}>
@@ -157,10 +152,10 @@ const Home = () => {
             )}
           </S.Lasts>
           <S.Lasts id="item3">
-            {lasts.length <= 12 ? (
+            {!lasts.data || lasts.data.length <= 12 ? (
               <Empty className="result" image={Empty.PRESENTED_IMAGE_SIMPLE} />
             ) : (
-              lasts.map((last, i) => {
+              lasts.data.map((last, i) => {
                 if (i > 11 && i <= 17) {
                   return (
                     <S.WrapperLast key={i}>
